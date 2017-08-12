@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>No JS, No Ajax</title>
+    <meta name="description" content="No JS, No Ajax">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <noscript>
+        For full functionality of this site it is necessary to enable JavaScript.
+    </noscript>
+    <script src="elm.js"></script>
+    <script type="text/javascript">
+      (function(){
+        var app = Elm.Main.fullscreen();
+        var onUrlChange = function(page) {
+          document.title = page;
+          document.querySelector('meta[name="description"]').setAttribute("content", "Meta Description. [" + page + "].");
+        };
+        app.ports.urlChange.subscribe(onUrlChange);
+      })();
+    </script>
+</body>
+
+</html>
