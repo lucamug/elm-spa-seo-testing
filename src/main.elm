@@ -7,6 +7,10 @@ import Html.Events exposing (..)
 import Json.Decode as Decode
 import Navigation
 import UrlParser
+import Process
+import Time
+import Http
+import Task
 
 
 (=>) : a -> b -> ( a, b )
@@ -20,11 +24,14 @@ port urlChange : String -> Cmd msg
 type Msg
     = ChangeLocation String
     | UrlChange Navigation.Location
+    | NewGenericData (Result Http.Error GenericData)
+    | FetchGenericData
 
 
 type alias Model =
     { route : Route
     , history : List String
+    , genericData : Maybe GenericData
     }
 
 
@@ -46,7 +53,7 @@ capitalize str =
                 newFirstLetter =
                     Char.toUpper firstLetter
             in
-            String.cons newFirstLetter rest
+                String.cons newFirstLetter rest
 
 
 matchers : UrlParser.Parser (Route -> a) a
@@ -90,21 +97,32 @@ update msg model =
         _ =
             Debug.log "update" msg
     in
-    case msg of
-        ChangeLocation pathWithSlash ->
-            ( model, Navigation.newUrl pathWithSlash )
+        case msg of
+            ChangeLocation pathWithSlash ->
+                ( model, Navigation.newUrl pathWithSlash )
 
-        UrlChange location ->
-            let
-                newRoute =
-                    locationToRoute location
+            UrlChange location ->
+                let
+                    newRoute =
+                        locationToRoute location
 
-                newHistory =
-                    location.pathname :: model.history
-            in
-            ( { model | route = newRoute, history = newHistory }
-            , urlChange (titleForJs newHistory location)
-            )
+                    newHistory =
+                        location.pathname :: model.history
+                in
+                    ( { model | route = newRoute, history = newHistory }
+                    , urlChange (titleForJs newHistory location)
+                    )
+
+            NewGenericData result ->
+                case result of
+                    Ok data ->
+                        ( { model | genericData = Just data }, Cmd.none )
+
+                    Err data ->
+                        ( model, Cmd.none )
+
+            FetchGenericData ->
+                ( model, Http.send NewGenericData (Http.get "data01.json" genericDataDecoder) )
 
 
 onLinkClick : String -> Attribute Msg
@@ -122,13 +140,13 @@ view model =
         _ =
             Debug.log "view" model
     in
-    div []
-        [ node "style" [] [ text css ]
-        , viewNavigation model
-        , viewPage model
-        , h2 [] [ text "History" ]
-        , ol [ reversed True ] (List.map (\item -> li [] [ text item ]) model.history)
-        ]
+        div []
+            [ node "style" [] [ text css ]
+            , viewNavigation model
+            , viewPage model
+            , h2 [] [ text "History" ]
+            , ol [ reversed True ] (List.map (\item -> li [] [ text item ]) model.history)
+            ]
 
 
 pathToName : String -> String
@@ -145,9 +163,9 @@ viewLink model path route =
         url =
             "/" ++ path
     in
-    li
-        [ classList [ ( "selected", model.route == route ) ] ]
-        [ a [ href url, onLinkClick url ] [ text (pathToName path) ] ]
+        li
+            [ classList [ ( "selected", model.route == route ) ] ]
+            [ a [ href url, onLinkClick url ] [ text (pathToName path) ] ]
 
 
 viewNavigation : Model -> Html Msg
@@ -175,15 +193,16 @@ init location =
         model =
             initModel location
     in
-    ( model
-    , initCmd model location
-    )
+        ( model
+        , initCmd model location
+        )
 
 
 initModel : Navigation.Location -> Model
 initModel location =
     { route = locationToRoute location
     , history = [ location.pathname ]
+    , genericData = Nothing
     }
 
 
@@ -195,16 +214,18 @@ titleForJs history location =
 initCmd : Model -> Navigation.Location -> Cmd Msg
 initCmd model location =
     Cmd.batch
-        [ -- Task.perform (\_ -> Types.FetchUserData) (Process.sleep (0.0 * Time.second))
-          --Task.perform (\_ -> UrlChange location) (Process.sleep (0.0 * Time.second))
-          urlChange (titleForJs model.history location)
+        [ urlChange (titleForJs model.history location)
+        , Task.perform (\_ -> FetchGenericData) (Process.sleep (1.0 * Time.second))
         ]
 
 
+type alias GenericData =
+    { data : String }
 
---            ( { model | route = newRoute, history = location.pathname :: model.history }
---          , urlChange (toString (List.length model.history + 1) ++ ". " ++ location.pathname)
---        )
+
+genericDataDecoder : Decode.Decoder GenericData
+genericDataDecoder =
+    Decode.map GenericData (Decode.at [ "data" ] Decode.string)
 
 
 subscriptions : Model -> Sub Msg
