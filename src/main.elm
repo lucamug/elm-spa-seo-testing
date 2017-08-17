@@ -11,6 +11,7 @@ import Process
 import Time
 import Http
 import Task
+import Regex
 
 
 (=>) : a -> b -> ( a, b )
@@ -24,14 +25,19 @@ port urlChange : String -> Cmd msg
 type Msg
     = ChangeLocation String
     | UrlChange Navigation.Location
-    | NewGenericData (Result Http.Error GenericData)
-    | FetchGenericData
+    | NewApi1Data (Result Http.Error Api1Data)
+    | NewApi2Data (Result Http.Error Api2Data)
+    | FetchApi1Data String
+    | FetchApi2Data String
 
 
 type alias Model =
     { route : Route
     , history : List String
-    , genericData : Maybe GenericData
+    , api1Data : String
+    , api2Data : String
+    , location : Navigation.Location
+    , version : String
     }
 
 
@@ -93,36 +99,58 @@ locationToRoute location =
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    let
-        _ =
-            Debug.log "update" msg
-    in
-        case msg of
-            ChangeLocation pathWithSlash ->
-                ( model, Navigation.newUrl pathWithSlash )
+    case msg of
+        ChangeLocation pathWithSlash ->
+            ( model, Navigation.newUrl pathWithSlash )
 
-            UrlChange location ->
-                let
-                    newRoute =
-                        locationToRoute location
+        UrlChange location ->
+            let
+                newRoute =
+                    locationToRoute location
 
-                    newHistory =
-                        location.pathname :: model.history
-                in
-                    ( { model | route = newRoute, history = newHistory }
-                    , urlChange (titleForJs newHistory location)
-                    )
+                newHistory =
+                    location.pathname :: model.history
 
-            NewGenericData result ->
-                case result of
-                    Ok data ->
-                        ( { model | genericData = Just data }, Cmd.none )
+                newModel =
+                    { model | route = newRoute, history = newHistory, location = location }
+            in
+                ( newModel
+                , urlChange (titleForJs newModel)
+                )
 
-                    Err data ->
-                        ( model, Cmd.none )
+        NewApi1Data result ->
+            case result of
+                Ok data ->
+                    let
+                        newModel =
+                            { model | api1Data = data.url }
+                    in
+                        ( newModel
+                        , urlChange (titleForJs newModel)
+                        )
 
-            FetchGenericData ->
-                ( model, Http.send NewGenericData (Http.get "data01.json" genericDataDecoder) )
+                Err data ->
+                    ( model, Cmd.none )
+
+        FetchApi1Data url ->
+            ( model, Http.send NewApi1Data (Http.get url api1Decoder) )
+
+        NewApi2Data result ->
+            case result of
+                Ok data ->
+                    let
+                        newModel =
+                            { model | api2Data = data.url }
+                    in
+                        ( newModel
+                        , urlChange (titleForJs newModel)
+                        )
+
+                Err data ->
+                    ( model, Cmd.none )
+
+        FetchApi2Data url ->
+            ( model, Http.send NewApi2Data (Http.get url api2Decoder) )
 
 
 onLinkClick : String -> Attribute Msg
@@ -136,17 +164,19 @@ onLinkClick path =
 
 view : Model -> Html Msg
 view model =
-    let
-        _ =
-            Debug.log "view" model
-    in
-        div []
-            [ node "style" [] [ text css ]
-            , viewNavigation model
-            , viewPage model
-            , h2 [] [ text "History" ]
-            , ol [ reversed True ] (List.map (\item -> li [] [ text item ]) model.history)
+    div []
+        [ node "style" [] [ text css ]
+        , viewNavigation model
+        , p [] [ text ("Title: " ++ (titleForJs model)) ]
+        , p []
+            [ text "History: "
+            , span []
+                (List.map (\item -> span [ class "history" ] [ text item ])
+                    (List.reverse (model.history))
+                )
             ]
+        , viewPage model
+        ]
 
 
 pathToName : String -> String
@@ -179,11 +209,48 @@ viewNavigation model =
 
 viewPage : Model -> Html Msg
 viewPage model =
-    h1 []
-        [ model.route
-            |> routeToPath
-            |> pathToName
-            |> text
+    div []
+        [ h1 []
+            [ model.route
+                |> routeToPath
+                |> pathToName
+                |> text
+            ]
+        , pre [ class "dante" ] [ text """Midway upon the journey of our life
+I found myself within a forest dark,
+For the straightforward pathway had been lost.
+
+Ah me! how hard a thing it is to say
+What was this forest savage, rough, and stern,
+Which in the very thought renews the fear.
+
+So bitter is it, death is little more;
+But of the good to treat, which there I found,
+Speak will I of the other things I saw there.
+
+I cannot well repeat how there I entered,
+So full was I of slumber at the moment
+In which I had abandoned the true way.
+
+But after I had reached a mountain's foot,
+At that point where the valley terminated,
+Which had with consternation pierced my heart,
+
+Upward I looked, and I beheld its shoulders
+Vested already with that planet's rays
+Which leadeth others right by every road.
+
+Then was the fear a little quieted
+That in my heart's lake had endured throughout
+The night, which I had passed so piteously
+
+And even as he, who, with distressful breath,
+Forth issued from the sea upon the shore,
+Turns to the water perilous and gazes;
+
+So did my soul, that still was fleeing onward,
+Turn itself back to re-behold the pass
+Which never yet a living person left.""" ]
         ]
 
 
@@ -202,35 +269,95 @@ initModel : Navigation.Location -> Model
 initModel location =
     { route = locationToRoute location
     , history = [ location.pathname ]
-    , genericData = Nothing
+    , api1Data = ""
+    , api2Data = ""
+    , location = location
+    , version = "1"
     }
 
 
-titleForJs : List String -> Navigation.Location -> String
-titleForJs history location =
-    toString (List.length history) ++ ". " ++ location.pathname
+titleForJs model =
+    let
+        num1 =
+            extractNumber model.api1Data
+
+        num2 =
+            extractNumber model.api2Data
+
+        historyLength =
+            toString (List.length model.history)
+    in
+        "V"
+            ++ model.version
+            ++ "H"
+            ++ historyLength
+            ++ "A"
+            ++ num1
+            ++ "A"
+            ++ num2
+            ++ "L"
+            ++ model.location.pathname
 
 
 initCmd : Model -> Navigation.Location -> Cmd Msg
 initCmd model location =
     Cmd.batch
-        [ urlChange (titleForJs model.history location)
-        , Task.perform (\_ -> FetchGenericData) (Process.sleep (1.0 * Time.second))
+        [ urlChange (titleForJs model)
+        , Task.perform (\_ -> FetchApi1Data "10.json") (Process.sleep (10.0 * Time.second))
+        , Task.perform (\_ -> FetchApi1Data "06.json") (Process.sleep (6.0 * Time.second))
+        , Task.perform (\_ -> FetchApi1Data "03.json") (Process.sleep (3.0 * Time.second))
+        , Task.perform (\_ -> FetchApi1Data "01.json") (Process.sleep (1.0 * Time.second))
+        , Task.perform (\_ -> FetchApi1Data "00.json") (Process.sleep (0.0 * Time.second))
+        , Task.perform (\_ -> FetchApi2Data "https://httpbin.org/delay/10") (Process.sleep (0.0 * Time.second))
+        , Task.perform (\_ -> FetchApi2Data "https://httpbin.org/delay/06") (Process.sleep (0.0 * Time.second))
+        , Task.perform (\_ -> FetchApi2Data "https://httpbin.org/delay/03") (Process.sleep (0.0 * Time.second))
+        , Task.perform (\_ -> FetchApi2Data "https://httpbin.org/delay/01") (Process.sleep (0.0 * Time.second))
+        , Task.perform (\_ -> FetchApi2Data "https://httpbin.org/delay/00") (Process.sleep (0.0 * Time.second))
         ]
 
 
-type alias GenericData =
-    { data : String }
+extractNumber text =
+    let
+        number =
+            Regex.find Regex.All (Regex.regex "\\d\\d") text
+    in
+        case List.head number of
+            Nothing ->
+                "[NaN]"
+
+            Just data ->
+                data.match
 
 
-genericDataDecoder : Decode.Decoder GenericData
-genericDataDecoder =
-    Decode.map GenericData (Decode.at [ "data" ] Decode.string)
+type alias Api1Data =
+    { url : String }
+
+
+type alias Api2Data =
+    { url : String }
+
+
+api1Decoder : Decode.Decoder Api1Data
+api1Decoder =
+    Decode.map Api1Data (Decode.at [ "url" ] Decode.string)
+
+
+api2Decoder : Decode.Decoder Api2Data
+api2Decoder =
+    Decode.map Api2Data (Decode.at [ "url" ] Decode.string)
 
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.none
+
+
+greenBright =
+    "#7effca"
+
+
+greenDark =
+    "#67caa1"
 
 
 css : String
@@ -245,7 +372,12 @@ body {
 .navigation li {
   display: inline-block;
 }
-
+.history {
+    display: inline-block;
+    border: 1px solid """ ++ greenDark ++ """;
+    margin: 1px 5px;
+    padding: 1px 5px;
+}
 
 .navigation a {
   display: inline-block;
@@ -253,10 +385,17 @@ body {
   padding: 10px;
 }
 .navigation .selected {
-  background-color: orange;
+  background-color: """ ++ greenBright ++ """;
 }
 h1 {
-  color: green;
+  color: #67caa1;
+}
+.dante::first-letter {
+    font-size: 6em;
+    color: """ ++ greenDark ++ """;
+}
+pre {
+    font-family: serif
 }
 """
 

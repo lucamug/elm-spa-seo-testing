@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>No JS, No Ajax</title>
+    <meta name="description" content="No JS, No Ajax">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <noscript>
+        For full functionality of this site it is necessary to enable JavaScript.
+    </noscript>
+    <script src="main.js"></script>
+    <script type="text/javascript">
+      (function(){
+        var app = Elm.Main.fullscreen();
+        var onUrlChange = function(page) {
+          document.title = page;
+          document.querySelector('meta[name="description"]').setAttribute("content", "Meta Description. [" + page + "].");
+        };
+        app.ports.urlChange.subscribe(onUrlChange);
+      })();
+      // Google Analytics START
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-104755771-1', 'auto');
+      ga('send', 'pageview');
+      // Google Analytics END
+    </script>
+</body>
+
+</html>
