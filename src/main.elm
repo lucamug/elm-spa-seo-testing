@@ -272,7 +272,7 @@ initModel location =
     , api1Data = ""
     , api2Data = ""
     , location = location
-    , version = "1"
+    , version = "02"
     }
 
 
@@ -289,13 +289,13 @@ titleForJs model =
     in
         "V"
             ++ model.version
-            ++ "H"
+            ++ ",H"
             ++ historyLength
-            ++ "A"
+            ++ ",Loc"
             ++ num1
-            ++ "A"
+            ++ ",Rem"
             ++ num2
-            ++ "L"
+            ++ ","
             ++ model.location.pathname
 
 
