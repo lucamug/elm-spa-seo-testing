@@ -2,4 +2,6 @@
 
 > $ npm install -g elm elm-live
 
-> $ elm-live --output=elm.js src/Main.elm --open --debug --pushstate
+> $ elm-live --dir=build --output=build/main.js src/main.elm --open --debug --pushstate
+
+https://www.google.it/search?q=site:elm-spa-seo-testing.surge.sh

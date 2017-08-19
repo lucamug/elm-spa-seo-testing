@@ -44,6 +44,9 @@ type alias Model =
 type Route
     = Top
     | About
+    | Section1
+    | Section2
+    | Section3
     | Sitemap
     | NotFound
 
@@ -67,6 +70,9 @@ matchers =
     UrlParser.oneOf
         [ UrlParser.map Top UrlParser.top
         , UrlParser.map About (UrlParser.s "about")
+        , UrlParser.map Section1 (UrlParser.s "section1")
+        , UrlParser.map Section2 (UrlParser.s "section2")
+        , UrlParser.map Section3 (UrlParser.s "section3")
         , UrlParser.map Sitemap (UrlParser.s "sitemap")
         ]
 
@@ -79,6 +85,15 @@ routeToPath route =
 
         About ->
             "about"
+
+        Section1 ->
+            "section1"
+
+        Section2 ->
+            "section2"
+
+        Section3 ->
+            "section3"
 
         Sitemap ->
             "sitemap"
@@ -168,6 +183,7 @@ view model =
         [ node "style" [] [ text css ]
         , viewNavigation model
         , p [] [ text ("Title: " ++ (titleForJs model)) ]
+        , p [] [ text "V = Version, H = History length, Loc = Local API, Rem = Remote API" ]
         , p []
             [ text "History: "
             , span []
@@ -203,6 +219,9 @@ viewNavigation model =
     ul [ class "navigation" ]
         [ viewLink model "" Top
         , viewLink model "about" About
+        , viewLink model "section1" Section1
+        , viewLink model "section2" Section2
+        , viewLink model "section3" Section3
         , viewLink model "sitemap" Sitemap
         ]
 
@@ -216,41 +235,23 @@ viewPage model =
                 |> pathToName
                 |> text
             ]
-        , pre [ class "dante" ] [ text """Midway upon the journey of our life
-I found myself within a forest dark,
-For the straightforward pathway had been lost.
+        , pre [ class "dante" ]
+            [ case model.route of
+                Section1 ->
+                    text section1
 
-Ah me! how hard a thing it is to say
-What was this forest savage, rough, and stern,
-Which in the very thought renews the fear.
+                Section2 ->
+                    text section2
 
-So bitter is it, death is little more;
-But of the good to treat, which there I found,
-Speak will I of the other things I saw there.
+                Section3 ->
+                    text section3
 
-I cannot well repeat how there I entered,
-So full was I of slumber at the moment
-In which I had abandoned the true way.
+                Top ->
+                    text """ This is..."""
 
-But after I had reached a mountain's foot,
-At that point where the valley terminated,
-Which had with consternation pierced my heart,
-
-Upward I looked, and I beheld its shoulders
-Vested already with that planet's rays
-Which leadeth others right by every road.
-
-Then was the fear a little quieted
-That in my heart's lake had endured throughout
-The night, which I had passed so piteously
-
-And even as he, who, with distressful breath,
-Forth issued from the sea upon the shore,
-Turns to the water perilous and gazes;
-
-So did my soul, that still was fleeing onward,
-Turn itself back to re-behold the pass
-Which never yet a living person left.""" ]
+                _ ->
+                    text ""
+            ]
         ]
 
 
@@ -272,7 +273,7 @@ initModel location =
     , api1Data = ""
     , api2Data = ""
     , location = location
-    , version = "02"
+    , version = "03"
     }
 
 
@@ -393,11 +394,54 @@ h1 {
 .dante::first-letter {
     font-size: 6em;
     color: """ ++ greenDark ++ """;
+    line-height: 30px;
 }
 pre {
     font-family: serif
 }
 """
+
+
+section1 =
+    """Midway upon the journey of our life
+I found myself within a forest dark,
+For the straightforward pathway had been lost.
+
+Ah me! how hard a thing it is to say
+What was this forest savage, rough, and stern,
+Which in the very thought renews the fear.
+
+So bitter is it, death is little more;
+But of the good to treat, which there I found,
+Speak will I of the other things I saw there."""
+
+
+section2 =
+    """I cannot well repeat how there I entered,
+So full was I of slumber at the moment
+In which I had abandoned the true way.
+
+But after I had reached a mountain's foot,
+At that point where the valley terminated,
+Which had with consternation pierced my heart,
+
+Upward I looked, and I beheld its shoulders
+Vested already with that planet's rays
+Which leadeth others right by every road."""
+
+
+section3 =
+    """Then was the fear a little quieted
+That in my heart's lake had endured throughout
+The night, which I had passed so piteously
+
+And even as he, who, with distressful breath,
+Forth issued from the sea upon the shore,
+Turns to the water perilous and gazes;
+
+So did my soul, that still was fleeing onward,
+Turn itself back to re-behold the pass
+Which never yet a living person left."""
 
 
 main : Program Never Model Msg
