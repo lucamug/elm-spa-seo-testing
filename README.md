@@ -1,20 +1,31 @@
-# Elm SPA SEO
+# SPA SEO
 
-> $ npm install -g elm elm-live
+SPA and SEO: Is Googlebot able to render a Single Page Application with Ajax calls?
 
-> $ elm-live --dir=build --output=build/main.js src/main.elm --open --debug --pushstate
+## [Demo with Time-traveling Debugger](http://elm-spa-seo-testing.surge.sh/)
 
-To deploy
+## How it works
 
-> $ cd build
-> $ surge
+Check out [the full writeup](https://medium.com/@l.mugnaini/spa-and-seo-is-googlebot-able-to-render-a-single-page-application-1f74e706ab11)!
 
-https://www.google.it/search?q=site:elm-spa-seo-testing.surge.sh
+## Getting started
 
-https://lucamug.github.io/elm-spa-seo-testing/build/
+If you don't already have `elm` and `elm-live`:
 
-https://medium.com/@l.mugnaini/spa-and-seo-is-googlebot-able-to-render-a-single-page-application-1f74e706ab11
+> npm install -g elm elm-live
 
-http://elm-spa-seo-testing.surge.sh/
+Then, to build everything:
 
-https://github.com/lucamug/elm-spa-seo-testing
+> elm-live --dir=build --output=build/main.js src/main.elm --pushstate --open --debug
+
+(Leave off the `--debug` if you don't want the time-traveling debugger.)
+
+## To deploy
+
+> cd build
+> surge
+
+## Links
+
+* [Search Result](https://www.google.com/search?q=site:elm-spa-seo-testing.surge.sh)
+* [Code](https://github.com/lucamug/elm-spa-seo-testing)

@@ -14060,19 +14060,19 @@ var _lucamug$elm_spa_seo_testing$Main$greenDark = '#67caa1';
 var _lucamug$elm_spa_seo_testing$Main$greenBright = '#7effca';
 var _lucamug$elm_spa_seo_testing$Main$css = A2(
 	_elm_lang$core$Basics_ops['++'],
-	'\nbody {\n  color: #555;\n  margin: 10px;\n  font-family: sans-serif;\n  background-color: #eee;\n}\n.navigation li {\n  display: inline-block;\n}\n.history {\n    display: inline-block;\n    border: 1px solid ',
+	'body {\n    color: #555;\n    margin: 10px;\n    font-family: sans-serif;\n    background-color: #eee;\n}\n.navigation li {\n    display: inline-block;\n}\n.history {\n    display: inline-block;\n    border: 1px solid ',
 	A2(
 		_elm_lang$core$Basics_ops['++'],
 		_lucamug$elm_spa_seo_testing$Main$greenDark,
 		A2(
 			_elm_lang$core$Basics_ops['++'],
-			';\n    margin: 1px 5px;\n    padding: 1px 5px;\n}\n.navigation a {\n  display: inline-block;\n  margin: 10px;\n  padding: 10px;\n}\n.navigation .selected {\n  background-color: ',
+			';\n    margin: 1px 5px;\n    padding: 1px 5px;\n}\n.navigation {\n    padding: 0;\n}\n.navigation a {\n    display: inline-block;\n    padding: 10px;\n}\n.navigation .selected {\n    background-color: ',
 			A2(
 				_elm_lang$core$Basics_ops['++'],
 				_lucamug$elm_spa_seo_testing$Main$greenBright,
 				A2(
 					_elm_lang$core$Basics_ops['++'],
-					';\n}\nh1 {\n  color: #67caa1;\n}\n.dante::first-letter {\n    font-size: 6em;\n    color: ',
+					';\n}\nh1 {\n    color: #67caa1;\n}\n.dante::first-letter {\n    font-size: 6em;\n    color: ',
 					A2(_elm_lang$core$Basics_ops['++'], _lucamug$elm_spa_seo_testing$Main$greenDark, ';\n    line-height: 30px;\n}\npre {\n    font-family: serif\n}\n.subAppHide .highlight{\n    background-color: #deff7e;\n}\n.subAppShow .highlight{\n    transition: all 1000ms;\n}\ntextarea {\n    width: 100%;\n    height: 160px;\n}\n'))))));
 var _lucamug$elm_spa_seo_testing$Main$extractNumber = function (text) {
 	var number = A3(

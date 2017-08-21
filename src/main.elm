@@ -413,15 +413,14 @@ greenDark =
 
 css : String
 css =
-    """
-body {
-  color: #555;
-  margin: 10px;
-  font-family: sans-serif;
-  background-color: #eee;
+    """body {
+    color: #555;
+    margin: 10px;
+    font-family: sans-serif;
+    background-color: #eee;
 }
 .navigation li {
-  display: inline-block;
+    display: inline-block;
 }
 .history {
     display: inline-block;
@@ -429,16 +428,18 @@ body {
     margin: 1px 5px;
     padding: 1px 5px;
 }
+.navigation {
+    padding: 0;
+}
 .navigation a {
-  display: inline-block;
-  margin: 10px;
-  padding: 10px;
+    display: inline-block;
+    padding: 10px;
 }
 .navigation .selected {
-  background-color: """ ++ greenBright ++ """;
+    background-color: """ ++ greenBright ++ """;
 }
 h1 {
-  color: #67caa1;
+    color: #67caa1;
 }
 .dante::first-letter {
     font-size: 6em;
