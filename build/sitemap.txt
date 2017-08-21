@@ -1,0 +1,5 @@
+http://elm-spa-seo-testing.surge.sh/
+http://elm-spa-seo-testing.surge.sh/section1
+http://elm-spa-seo-testing.surge.sh/section2
+http://elm-spa-seo-testing.surge.sh/section3
+http://elm-spa-seo-testing.surge.sh/sitemap

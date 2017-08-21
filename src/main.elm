@@ -22,6 +22,9 @@ import Regex
 port urlChange : String -> Cmd msg
 
 
+port titleChanged : (String -> msg) -> Sub msg
+
+
 type Msg
     = ChangeLocation String
     | UrlChange Navigation.Location
@@ -29,21 +32,24 @@ type Msg
     | NewApi2Data (Result Http.Error Api2Data)
     | FetchApi1Data String
     | FetchApi2Data String
+    | AddTimeToModel Time.Time
+    | OnTitleChanged String
 
 
 type alias Model =
     { route : Route
     , history : List String
+    , titleHistory : List String
     , api1Data : String
     , api2Data : String
     , location : Navigation.Location
     , version : String
+    , time : Time.Time
     }
 
 
 type Route
     = Top
-    | About
     | Section1
     | Section2
     | Section3
@@ -69,7 +75,6 @@ matchers : UrlParser.Parser (Route -> a) a
 matchers =
     UrlParser.oneOf
         [ UrlParser.map Top UrlParser.top
-        , UrlParser.map About (UrlParser.s "about")
         , UrlParser.map Section1 (UrlParser.s "section1")
         , UrlParser.map Section2 (UrlParser.s "section2")
         , UrlParser.map Section3 (UrlParser.s "section3")
@@ -82,9 +87,6 @@ routeToPath route =
     case route of
         Top ->
             ""
-
-        About ->
-            "about"
 
         Section1 ->
             "section1"
@@ -112,6 +114,11 @@ locationToRoute location =
             NotFound
 
 
+updateTitleAndMetaDescription : Model -> Cmd msg
+updateTitleAndMetaDescription model =
+    urlChange (titleForJs model)
+
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
@@ -130,7 +137,7 @@ update msg model =
                     { model | route = newRoute, history = newHistory, location = location }
             in
                 ( newModel
-                , urlChange (titleForJs newModel)
+                , updateTitleAndMetaDescription newModel
                 )
 
         NewApi1Data result ->
@@ -141,7 +148,7 @@ update msg model =
                             { model | api1Data = data.url }
                     in
                         ( newModel
-                        , urlChange (titleForJs newModel)
+                        , updateTitleAndMetaDescription newModel
                         )
 
                 Err data ->
@@ -158,7 +165,7 @@ update msg model =
                             { model | api2Data = data.url }
                     in
                         ( newModel
-                        , urlChange (titleForJs newModel)
+                        , updateTitleAndMetaDescription newModel
                         )
 
                 Err data ->
@@ -166,6 +173,20 @@ update msg model =
 
         FetchApi2Data url ->
             ( model, Http.send NewApi2Data (Http.get url api2Decoder) )
+
+        AddTimeToModel time ->
+            let
+                newModel =
+                    { model | time = time }
+            in
+                ( newModel, updateTitleAndMetaDescription newModel )
+
+        OnTitleChanged title ->
+            let
+                newTitleHistory =
+                    title :: model.titleHistory
+            in
+                ( { model | titleHistory = newTitleHistory }, Cmd.none )
 
 
 onLinkClick : String -> Attribute Msg
@@ -179,10 +200,10 @@ onLinkClick path =
 
 view : Model -> Html Msg
 view model =
-    div []
+    div [ id "app" ]
         [ node "style" [] [ text css ]
         , viewNavigation model
-        , p [] [ text ("Title: " ++ (titleForJs model)) ]
+        , p [ class "highlight" ] [ text ("Title: " ++ (titleForJs model)) ]
         , p [] [ text "V = Version, H = History length, Loc = Local API, Rem = Remote API" ]
         , p []
             [ text "History: "
@@ -218,7 +239,6 @@ viewNavigation : Model -> Html Msg
 viewNavigation model =
     ul [ class "navigation" ]
         [ viewLink model "" Top
-        , viewLink model "about" About
         , viewLink model "section1" Section1
         , viewLink model "section2" Section2
         , viewLink model "section3" Section3
@@ -247,12 +267,32 @@ viewPage model =
                     text section3
 
                 Top ->
-                    text """ This is..."""
+                    viewTop
 
-                _ ->
-                    text ""
+                Sitemap ->
+                    textarea []
+                        [ text
+                            ((routeToSurgeUrl Top)
+                                ++ "\n"
+                                ++ (routeToSurgeUrl Section1)
+                                ++ "\n"
+                                ++ (routeToSurgeUrl Section2)
+                                ++ "\n"
+                                ++ (routeToSurgeUrl Section3)
+                                ++ "\n"
+                                ++ (routeToSurgeUrl Sitemap)
+                            )
+                        ]
+
+                NotFound ->
+                    text "Page not Found"
             ]
         ]
+
+
+routeToSurgeUrl : Route -> String
+routeToSurgeUrl route =
+    "http://elm-spa-seo-testing.surge.sh/" ++ (routeToPath route)
 
 
 init : Navigation.Location -> ( Model, Cmd Msg )
@@ -270,13 +310,16 @@ initModel : Navigation.Location -> Model
 initModel location =
     { route = locationToRoute location
     , history = [ location.pathname ]
+    , titleHistory = []
     , api1Data = ""
     , api2Data = ""
     , location = location
-    , version = "03"
+    , version = "04"
+    , time = 0
     }
 
 
+titleForJs : Model -> String
 titleForJs model =
     let
         num1 =
@@ -296,6 +339,8 @@ titleForJs model =
             ++ num1
             ++ ",Rem"
             ++ num2
+            ++ ",Time"
+            ++ toString (model.time)
             ++ ","
             ++ model.location.pathname
 
@@ -303,7 +348,7 @@ titleForJs model =
 initCmd : Model -> Navigation.Location -> Cmd Msg
 initCmd model location =
     Cmd.batch
-        [ urlChange (titleForJs model)
+        [ Task.perform AddTimeToModel Time.now
         , Task.perform (\_ -> FetchApi1Data "10.json") (Process.sleep (10.0 * Time.second))
         , Task.perform (\_ -> FetchApi1Data "06.json") (Process.sleep (6.0 * Time.second))
         , Task.perform (\_ -> FetchApi1Data "03.json") (Process.sleep (3.0 * Time.second))
@@ -317,6 +362,7 @@ initCmd model location =
         ]
 
 
+extractNumber : String -> String
 extractNumber text =
     let
         number =
@@ -350,13 +396,17 @@ api2Decoder =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none
+    Sub.batch
+        [ titleChanged OnTitleChanged
+        ]
 
 
+greenBright : String
 greenBright =
     "#7effca"
 
 
+greenDark : String
 greenDark =
     "#67caa1"
 
@@ -379,7 +429,6 @@ body {
     margin: 1px 5px;
     padding: 1px 5px;
 }
-
 .navigation a {
   display: inline-block;
   margin: 10px;
@@ -399,9 +448,40 @@ h1 {
 pre {
     font-family: serif
 }
+.subAppHide .highlight{
+    background-color: #deff7e;
+}
+.subAppShow .highlight{
+    transition: all 1000ms;
+}
+textarea {
+    width: 100%;
+    height: 160px;
+}
 """
 
 
+viewTop : Html msg
+viewTop =
+    div []
+        [ text """This is a test Single Page Application to
+verify the Googlebot (and other Search Engine crowlers)
+capability to execute Javascript and Ajax calls."""
+        , ul []
+            [ li []
+                [ a [ href "https://medium.com/@l.mugnaini/spa-and-seo-is-googlebot-able-to-render-a-single-page-application-1f74e706ab11" ] [ text "Full Article" ]
+                ]
+            , li []
+                [ a [ href "https://www.google.it/search?q=site:elm-spa-seo-testing.surge.sh" ] [ text "Search Result" ]
+                ]
+            , li []
+                [ a [ href "https://github.com/lucamug/elm-spa-seo-testing" ] [ text "Code" ]
+                ]
+            ]
+        ]
+
+
+section1 : String
 section1 =
     """Midway upon the journey of our life
 I found myself within a forest dark,
@@ -416,6 +496,7 @@ But of the good to treat, which there I found,
 Speak will I of the other things I saw there."""
 
 
+section2 : String
 section2 =
     """I cannot well repeat how there I entered,
 So full was I of slumber at the moment
@@ -430,6 +511,7 @@ Vested already with that planet's rays
 Which leadeth others right by every road."""
 
 
+section3 : String
 section3 =
     """Then was the fear a little quieted
 That in my heart's lake had endured throughout

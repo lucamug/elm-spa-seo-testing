@@ -13975,6 +13975,87 @@ var _evancz$url_parser$UrlParser$intParam = function (name) {
 var _lucamug$elm_spa_seo_testing$Main$section3 = 'Then was the fear a little quieted\nThat in my heart\'s lake had endured throughout\nThe night, which I had passed so piteously\n\nAnd even as he, who, with distressful breath,\nForth issued from the sea upon the shore,\nTurns to the water perilous and gazes;\n\nSo did my soul, that still was fleeing onward,\nTurn itself back to re-behold the pass\nWhich never yet a living person left.';
 var _lucamug$elm_spa_seo_testing$Main$section2 = 'I cannot well repeat how there I entered,\nSo full was I of slumber at the moment\nIn which I had abandoned the true way.\n\nBut after I had reached a mountain\'s foot,\nAt that point where the valley terminated,\nWhich had with consternation pierced my heart,\n\nUpward I looked, and I beheld its shoulders\nVested already with that planet\'s rays\nWhich leadeth others right by every road.';
 var _lucamug$elm_spa_seo_testing$Main$section1 = 'Midway upon the journey of our life\nI found myself within a forest dark,\nFor the straightforward pathway had been lost.\n\nAh me! how hard a thing it is to say\nWhat was this forest savage, rough, and stern,\nWhich in the very thought renews the fear.\n\nSo bitter is it, death is little more;\nBut of the good to treat, which there I found,\nSpeak will I of the other things I saw there.';
+var _lucamug$elm_spa_seo_testing$Main$viewTop = A2(
+	_elm_lang$html$Html$div,
+	{ctor: '[]'},
+	{
+		ctor: '::',
+		_0: _elm_lang$html$Html$text('This is a test Single Page Application to\nverify the Googlebot (and other Search Engine crowlers)\ncapability to execute Javascript and Ajax calls.'),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$ul,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$li,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$a,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$href('https://medium.com/@l.mugnaini/spa-and-seo-is-googlebot-able-to-render-a-single-page-application-1f74e706ab11'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text('Full Article'),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$li,
+							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$a,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$href('https://www.google.it/search?q=site:elm-spa-seo-testing.surge.sh'),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('Search Result'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$li,
+								{ctor: '[]'},
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$a,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$href('https://github.com/lucamug/elm-spa-seo-testing'),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('Code'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}
+					}
+				}),
+			_1: {ctor: '[]'}
+		}
+	});
 var _lucamug$elm_spa_seo_testing$Main$greenDark = '#67caa1';
 var _lucamug$elm_spa_seo_testing$Main$greenBright = '#7effca';
 var _lucamug$elm_spa_seo_testing$Main$css = A2(
@@ -13985,17 +14066,14 @@ var _lucamug$elm_spa_seo_testing$Main$css = A2(
 		_lucamug$elm_spa_seo_testing$Main$greenDark,
 		A2(
 			_elm_lang$core$Basics_ops['++'],
-			';\n    margin: 1px 5px;\n    padding: 1px 5px;\n}\n\n.navigation a {\n  display: inline-block;\n  margin: 10px;\n  padding: 10px;\n}\n.navigation .selected {\n  background-color: ',
+			';\n    margin: 1px 5px;\n    padding: 1px 5px;\n}\n.navigation a {\n  display: inline-block;\n  margin: 10px;\n  padding: 10px;\n}\n.navigation .selected {\n  background-color: ',
 			A2(
 				_elm_lang$core$Basics_ops['++'],
 				_lucamug$elm_spa_seo_testing$Main$greenBright,
 				A2(
 					_elm_lang$core$Basics_ops['++'],
 					';\n}\nh1 {\n  color: #67caa1;\n}\n.dante::first-letter {\n    font-size: 6em;\n    color: ',
-					A2(_elm_lang$core$Basics_ops['++'], _lucamug$elm_spa_seo_testing$Main$greenDark, ';\n    line-height: 30px;\n}\npre {\n    font-family: serif\n}\n'))))));
-var _lucamug$elm_spa_seo_testing$Main$subscriptions = function (model) {
-	return _elm_lang$core$Platform_Sub$none;
-};
+					A2(_elm_lang$core$Basics_ops['++'], _lucamug$elm_spa_seo_testing$Main$greenDark, ';\n    line-height: 30px;\n}\npre {\n    font-family: serif\n}\n.subAppHide .highlight{\n    background-color: #deff7e;\n}\n.subAppShow .highlight{\n    transition: all 1000ms;\n}\ntextarea {\n    width: 100%;\n    height: 160px;\n}\n'))))));
 var _lucamug$elm_spa_seo_testing$Main$extractNumber = function (text) {
 	var number = A3(
 		_elm_lang$core$Regex$find,
@@ -14038,15 +14116,19 @@ var _lucamug$elm_spa_seo_testing$Main$titleForJs = function (model) {
 								A2(
 									_elm_lang$core$Basics_ops['++'],
 									num2,
-									A2(_elm_lang$core$Basics_ops['++'], ',', model.location.pathname)))))))));
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										',Time',
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											_elm_lang$core$Basics$toString(model.time),
+											A2(_elm_lang$core$Basics_ops['++'], ',', model.location.pathname)))))))))));
 };
 var _lucamug$elm_spa_seo_testing$Main$routeToPath = function (route) {
 	var _p1 = route;
 	switch (_p1.ctor) {
 		case 'Top':
 			return '';
-		case 'About':
-			return 'about';
 		case 'Section1':
 			return 'section1';
 		case 'Section2':
@@ -14058,6 +14140,12 @@ var _lucamug$elm_spa_seo_testing$Main$routeToPath = function (route) {
 		default:
 			return 'notFound';
 	}
+};
+var _lucamug$elm_spa_seo_testing$Main$routeToSurgeUrl = function (route) {
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		'http://elm-spa-seo-testing.surge.sh/',
+		_lucamug$elm_spa_seo_testing$Main$routeToPath(route));
 };
 var _lucamug$elm_spa_seo_testing$Main$capitalize = function (str) {
 	var _p2 = _elm_lang$core$String$uncons(str);
@@ -14071,54 +14159,6 @@ var _lucamug$elm_spa_seo_testing$Main$capitalize = function (str) {
 var _lucamug$elm_spa_seo_testing$Main$pathToName = function (path) {
 	return _elm_lang$core$Native_Utils.eq(path, '') ? 'Home' : _lucamug$elm_spa_seo_testing$Main$capitalize(path);
 };
-var _lucamug$elm_spa_seo_testing$Main$viewPage = function (model) {
-	return A2(
-		_elm_lang$html$Html$div,
-		{ctor: '[]'},
-		{
-			ctor: '::',
-			_0: A2(
-				_elm_lang$html$Html$h1,
-				{ctor: '[]'},
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html$text(
-						_lucamug$elm_spa_seo_testing$Main$pathToName(
-							_lucamug$elm_spa_seo_testing$Main$routeToPath(model.route))),
-					_1: {ctor: '[]'}
-				}),
-			_1: {
-				ctor: '::',
-				_0: A2(
-					_elm_lang$html$Html$pre,
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class('dante'),
-						_1: {ctor: '[]'}
-					},
-					{
-						ctor: '::',
-						_0: function () {
-							var _p3 = model.route;
-							switch (_p3.ctor) {
-								case 'Section1':
-									return _elm_lang$html$Html$text(_lucamug$elm_spa_seo_testing$Main$section1);
-								case 'Section2':
-									return _elm_lang$html$Html$text(_lucamug$elm_spa_seo_testing$Main$section2);
-								case 'Section3':
-									return _elm_lang$html$Html$text(_lucamug$elm_spa_seo_testing$Main$section3);
-								case 'Top':
-									return _elm_lang$html$Html$text(' This is...');
-								default:
-									return _elm_lang$html$Html$text('');
-							}
-						}(),
-						_1: {ctor: '[]'}
-					}),
-				_1: {ctor: '[]'}
-			}
-		});
-};
 var _lucamug$elm_spa_seo_testing$Main_ops = _lucamug$elm_spa_seo_testing$Main_ops || {};
 _lucamug$elm_spa_seo_testing$Main_ops['=>'] = F2(
 	function (v0, v1) {
@@ -14129,9 +14169,14 @@ var _lucamug$elm_spa_seo_testing$Main$urlChange = _elm_lang$core$Native_Platform
 	function (v) {
 		return v;
 	});
-var _lucamug$elm_spa_seo_testing$Main$Model = F6(
-	function (a, b, c, d, e, f) {
-		return {route: a, history: b, api1Data: c, api2Data: d, location: e, version: f};
+var _lucamug$elm_spa_seo_testing$Main$updateTitleAndMetaDescription = function (model) {
+	return _lucamug$elm_spa_seo_testing$Main$urlChange(
+		_lucamug$elm_spa_seo_testing$Main$titleForJs(model));
+};
+var _lucamug$elm_spa_seo_testing$Main$titleChanged = _elm_lang$core$Native_Platform.incomingPort('titleChanged', _elm_lang$core$Json_Decode$string);
+var _lucamug$elm_spa_seo_testing$Main$Model = F8(
+	function (a, b, c, d, e, f, g, h) {
+		return {route: a, history: b, titleHistory: c, api1Data: d, api2Data: e, location: f, version: g, time: h};
 	});
 var _lucamug$elm_spa_seo_testing$Main$Api1Data = function (a) {
 	return {url: a};
@@ -14161,6 +14206,20 @@ var _lucamug$elm_spa_seo_testing$Main$api2Decoder = A2(
 			_1: {ctor: '[]'}
 		},
 		_elm_lang$core$Json_Decode$string));
+var _lucamug$elm_spa_seo_testing$Main$OnTitleChanged = function (a) {
+	return {ctor: 'OnTitleChanged', _0: a};
+};
+var _lucamug$elm_spa_seo_testing$Main$subscriptions = function (model) {
+	return _elm_lang$core$Platform_Sub$batch(
+		{
+			ctor: '::',
+			_0: _lucamug$elm_spa_seo_testing$Main$titleChanged(_lucamug$elm_spa_seo_testing$Main$OnTitleChanged),
+			_1: {ctor: '[]'}
+		});
+};
+var _lucamug$elm_spa_seo_testing$Main$AddTimeToModel = function (a) {
+	return {ctor: 'AddTimeToModel', _0: a};
+};
 var _lucamug$elm_spa_seo_testing$Main$FetchApi2Data = function (a) {
 	return {ctor: 'FetchApi2Data', _0: a};
 };
@@ -14172,13 +14231,12 @@ var _lucamug$elm_spa_seo_testing$Main$initCmd = F2(
 		return _elm_lang$core$Platform_Cmd$batch(
 			{
 				ctor: '::',
-				_0: _lucamug$elm_spa_seo_testing$Main$urlChange(
-					_lucamug$elm_spa_seo_testing$Main$titleForJs(model)),
+				_0: A2(_elm_lang$core$Task$perform, _lucamug$elm_spa_seo_testing$Main$AddTimeToModel, _elm_lang$core$Time$now),
 				_1: {
 					ctor: '::',
 					_0: A2(
 						_elm_lang$core$Task$perform,
-						function (_p4) {
+						function (_p3) {
 							return _lucamug$elm_spa_seo_testing$Main$FetchApi1Data('10.json');
 						},
 						_elm_lang$core$Process$sleep(10.0 * _elm_lang$core$Time$second)),
@@ -14186,7 +14244,7 @@ var _lucamug$elm_spa_seo_testing$Main$initCmd = F2(
 						ctor: '::',
 						_0: A2(
 							_elm_lang$core$Task$perform,
-							function (_p5) {
+							function (_p4) {
 								return _lucamug$elm_spa_seo_testing$Main$FetchApi1Data('06.json');
 							},
 							_elm_lang$core$Process$sleep(6.0 * _elm_lang$core$Time$second)),
@@ -14194,7 +14252,7 @@ var _lucamug$elm_spa_seo_testing$Main$initCmd = F2(
 							ctor: '::',
 							_0: A2(
 								_elm_lang$core$Task$perform,
-								function (_p6) {
+								function (_p5) {
 									return _lucamug$elm_spa_seo_testing$Main$FetchApi1Data('03.json');
 								},
 								_elm_lang$core$Process$sleep(3.0 * _elm_lang$core$Time$second)),
@@ -14202,7 +14260,7 @@ var _lucamug$elm_spa_seo_testing$Main$initCmd = F2(
 								ctor: '::',
 								_0: A2(
 									_elm_lang$core$Task$perform,
-									function (_p7) {
+									function (_p6) {
 										return _lucamug$elm_spa_seo_testing$Main$FetchApi1Data('01.json');
 									},
 									_elm_lang$core$Process$sleep(1.0 * _elm_lang$core$Time$second)),
@@ -14210,7 +14268,7 @@ var _lucamug$elm_spa_seo_testing$Main$initCmd = F2(
 									ctor: '::',
 									_0: A2(
 										_elm_lang$core$Task$perform,
-										function (_p8) {
+										function (_p7) {
 											return _lucamug$elm_spa_seo_testing$Main$FetchApi1Data('00.json');
 										},
 										_elm_lang$core$Process$sleep(0.0 * _elm_lang$core$Time$second)),
@@ -14218,7 +14276,7 @@ var _lucamug$elm_spa_seo_testing$Main$initCmd = F2(
 										ctor: '::',
 										_0: A2(
 											_elm_lang$core$Task$perform,
-											function (_p9) {
+											function (_p8) {
 												return _lucamug$elm_spa_seo_testing$Main$FetchApi2Data('https://httpbin.org/delay/10');
 											},
 											_elm_lang$core$Process$sleep(0.0 * _elm_lang$core$Time$second)),
@@ -14226,7 +14284,7 @@ var _lucamug$elm_spa_seo_testing$Main$initCmd = F2(
 											ctor: '::',
 											_0: A2(
 												_elm_lang$core$Task$perform,
-												function (_p10) {
+												function (_p9) {
 													return _lucamug$elm_spa_seo_testing$Main$FetchApi2Data('https://httpbin.org/delay/06');
 												},
 												_elm_lang$core$Process$sleep(0.0 * _elm_lang$core$Time$second)),
@@ -14234,7 +14292,7 @@ var _lucamug$elm_spa_seo_testing$Main$initCmd = F2(
 												ctor: '::',
 												_0: A2(
 													_elm_lang$core$Task$perform,
-													function (_p11) {
+													function (_p10) {
 														return _lucamug$elm_spa_seo_testing$Main$FetchApi2Data('https://httpbin.org/delay/03');
 													},
 													_elm_lang$core$Process$sleep(0.0 * _elm_lang$core$Time$second)),
@@ -14242,7 +14300,7 @@ var _lucamug$elm_spa_seo_testing$Main$initCmd = F2(
 													ctor: '::',
 													_0: A2(
 														_elm_lang$core$Task$perform,
-														function (_p12) {
+														function (_p11) {
 															return _lucamug$elm_spa_seo_testing$Main$FetchApi2Data('https://httpbin.org/delay/01');
 														},
 														_elm_lang$core$Process$sleep(0.0 * _elm_lang$core$Time$second)),
@@ -14250,7 +14308,7 @@ var _lucamug$elm_spa_seo_testing$Main$initCmd = F2(
 														ctor: '::',
 														_0: A2(
 															_elm_lang$core$Task$perform,
-															function (_p13) {
+															function (_p12) {
 																return _lucamug$elm_spa_seo_testing$Main$FetchApi2Data('https://httpbin.org/delay/00');
 															},
 															_elm_lang$core$Process$sleep(0.0 * _elm_lang$core$Time$second)),
@@ -14333,7 +14391,6 @@ var _lucamug$elm_spa_seo_testing$Main$Sitemap = {ctor: 'Sitemap'};
 var _lucamug$elm_spa_seo_testing$Main$Section3 = {ctor: 'Section3'};
 var _lucamug$elm_spa_seo_testing$Main$Section2 = {ctor: 'Section2'};
 var _lucamug$elm_spa_seo_testing$Main$Section1 = {ctor: 'Section1'};
-var _lucamug$elm_spa_seo_testing$Main$About = {ctor: 'About'};
 var _lucamug$elm_spa_seo_testing$Main$Top = {ctor: 'Top'};
 var _lucamug$elm_spa_seo_testing$Main$matchers = _evancz$url_parser$UrlParser$oneOf(
 	{
@@ -14343,81 +14400,72 @@ var _lucamug$elm_spa_seo_testing$Main$matchers = _evancz$url_parser$UrlParser$on
 			ctor: '::',
 			_0: A2(
 				_evancz$url_parser$UrlParser$map,
-				_lucamug$elm_spa_seo_testing$Main$About,
-				_evancz$url_parser$UrlParser$s('about')),
+				_lucamug$elm_spa_seo_testing$Main$Section1,
+				_evancz$url_parser$UrlParser$s('section1')),
 			_1: {
 				ctor: '::',
 				_0: A2(
 					_evancz$url_parser$UrlParser$map,
-					_lucamug$elm_spa_seo_testing$Main$Section1,
-					_evancz$url_parser$UrlParser$s('section1')),
+					_lucamug$elm_spa_seo_testing$Main$Section2,
+					_evancz$url_parser$UrlParser$s('section2')),
 				_1: {
 					ctor: '::',
 					_0: A2(
 						_evancz$url_parser$UrlParser$map,
-						_lucamug$elm_spa_seo_testing$Main$Section2,
-						_evancz$url_parser$UrlParser$s('section2')),
+						_lucamug$elm_spa_seo_testing$Main$Section3,
+						_evancz$url_parser$UrlParser$s('section3')),
 					_1: {
 						ctor: '::',
 						_0: A2(
 							_evancz$url_parser$UrlParser$map,
-							_lucamug$elm_spa_seo_testing$Main$Section3,
-							_evancz$url_parser$UrlParser$s('section3')),
-						_1: {
-							ctor: '::',
-							_0: A2(
-								_evancz$url_parser$UrlParser$map,
-								_lucamug$elm_spa_seo_testing$Main$Sitemap,
-								_evancz$url_parser$UrlParser$s('sitemap')),
-							_1: {ctor: '[]'}
-						}
+							_lucamug$elm_spa_seo_testing$Main$Sitemap,
+							_evancz$url_parser$UrlParser$s('sitemap')),
+						_1: {ctor: '[]'}
 					}
 				}
 			}
 		}
 	});
 var _lucamug$elm_spa_seo_testing$Main$locationToRoute = function (location) {
-	var _p14 = A2(_evancz$url_parser$UrlParser$parsePath, _lucamug$elm_spa_seo_testing$Main$matchers, location);
-	if (_p14.ctor === 'Just') {
-		return _p14._0;
+	var _p13 = A2(_evancz$url_parser$UrlParser$parsePath, _lucamug$elm_spa_seo_testing$Main$matchers, location);
+	if (_p13.ctor === 'Just') {
+		return _p13._0;
 	} else {
 		return _lucamug$elm_spa_seo_testing$Main$NotFound;
 	}
 };
 var _lucamug$elm_spa_seo_testing$Main$update = F2(
 	function (msg, model) {
-		var _p15 = msg;
-		switch (_p15.ctor) {
+		var _p14 = msg;
+		switch (_p14.ctor) {
 			case 'ChangeLocation':
 				return {
 					ctor: '_Tuple2',
 					_0: model,
-					_1: _elm_lang$navigation$Navigation$newUrl(_p15._0)
+					_1: _elm_lang$navigation$Navigation$newUrl(_p14._0)
 				};
 			case 'UrlChange':
-				var _p16 = _p15._0;
-				var newHistory = {ctor: '::', _0: _p16.pathname, _1: model.history};
-				var newRoute = _lucamug$elm_spa_seo_testing$Main$locationToRoute(_p16);
+				var _p15 = _p14._0;
+				var newHistory = {ctor: '::', _0: _p15.pathname, _1: model.history};
+				var newRoute = _lucamug$elm_spa_seo_testing$Main$locationToRoute(_p15);
 				var newModel = _elm_lang$core$Native_Utils.update(
 					model,
-					{route: newRoute, history: newHistory, location: _p16});
+					{route: newRoute, history: newHistory, location: _p15});
 				return {
 					ctor: '_Tuple2',
 					_0: newModel,
-					_1: _lucamug$elm_spa_seo_testing$Main$urlChange(
-						_lucamug$elm_spa_seo_testing$Main$titleForJs(newModel))
+					_1: _lucamug$elm_spa_seo_testing$Main$updateTitleAndMetaDescription(newModel)
 				};
 			case 'NewApi1Data':
-				var _p17 = _p15._0;
-				if (_p17.ctor === 'Ok') {
+				var _p16 = _p14._0;
+				if (_p16.ctor === 'Ok') {
 					var newModel = _elm_lang$core$Native_Utils.update(
 						model,
-						{api1Data: _p17._0.url});
+						{api1Data: _p16._0.url});
 					return {
 						ctor: '_Tuple2',
 						_0: newModel,
-						_1: _lucamug$elm_spa_seo_testing$Main$urlChange(
-							_lucamug$elm_spa_seo_testing$Main$titleForJs(newModel))
+						_1: _lucamug$elm_spa_seo_testing$Main$updateTitleAndMetaDescription(newModel)
 					};
 				} else {
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
@@ -14429,31 +14477,48 @@ var _lucamug$elm_spa_seo_testing$Main$update = F2(
 					_1: A2(
 						_elm_lang$http$Http$send,
 						_lucamug$elm_spa_seo_testing$Main$NewApi1Data,
-						A2(_elm_lang$http$Http$get, _p15._0, _lucamug$elm_spa_seo_testing$Main$api1Decoder))
+						A2(_elm_lang$http$Http$get, _p14._0, _lucamug$elm_spa_seo_testing$Main$api1Decoder))
 				};
 			case 'NewApi2Data':
-				var _p18 = _p15._0;
-				if (_p18.ctor === 'Ok') {
+				var _p17 = _p14._0;
+				if (_p17.ctor === 'Ok') {
 					var newModel = _elm_lang$core$Native_Utils.update(
 						model,
-						{api2Data: _p18._0.url});
+						{api2Data: _p17._0.url});
 					return {
 						ctor: '_Tuple2',
 						_0: newModel,
-						_1: _lucamug$elm_spa_seo_testing$Main$urlChange(
-							_lucamug$elm_spa_seo_testing$Main$titleForJs(newModel))
+						_1: _lucamug$elm_spa_seo_testing$Main$updateTitleAndMetaDescription(newModel)
 					};
 				} else {
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
-			default:
+			case 'FetchApi2Data':
 				return {
 					ctor: '_Tuple2',
 					_0: model,
 					_1: A2(
 						_elm_lang$http$Http$send,
 						_lucamug$elm_spa_seo_testing$Main$NewApi2Data,
-						A2(_elm_lang$http$Http$get, _p15._0, _lucamug$elm_spa_seo_testing$Main$api2Decoder))
+						A2(_elm_lang$http$Http$get, _p14._0, _lucamug$elm_spa_seo_testing$Main$api2Decoder))
+				};
+			case 'AddTimeToModel':
+				var newModel = _elm_lang$core$Native_Utils.update(
+					model,
+					{time: _p14._0});
+				return {
+					ctor: '_Tuple2',
+					_0: newModel,
+					_1: _lucamug$elm_spa_seo_testing$Main$updateTitleAndMetaDescription(newModel)
+				};
+			default:
+				var newTitleHistory = {ctor: '::', _0: _p14._0, _1: model.titleHistory};
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{titleHistory: newTitleHistory}),
+					_1: _elm_lang$core$Platform_Cmd$none
 				};
 		}
 	});
@@ -14465,10 +14530,12 @@ var _lucamug$elm_spa_seo_testing$Main$initModel = function (location) {
 			_0: location.pathname,
 			_1: {ctor: '[]'}
 		},
+		titleHistory: {ctor: '[]'},
 		api1Data: '',
 		api2Data: '',
 		location: location,
-		version: '03'
+		version: '04',
+		time: 0
 	};
 };
 var _lucamug$elm_spa_seo_testing$Main$init = function (location) {
@@ -14492,31 +14559,113 @@ var _lucamug$elm_spa_seo_testing$Main$viewNavigation = function (model) {
 			_0: A3(_lucamug$elm_spa_seo_testing$Main$viewLink, model, '', _lucamug$elm_spa_seo_testing$Main$Top),
 			_1: {
 				ctor: '::',
-				_0: A3(_lucamug$elm_spa_seo_testing$Main$viewLink, model, 'about', _lucamug$elm_spa_seo_testing$Main$About),
+				_0: A3(_lucamug$elm_spa_seo_testing$Main$viewLink, model, 'section1', _lucamug$elm_spa_seo_testing$Main$Section1),
 				_1: {
 					ctor: '::',
-					_0: A3(_lucamug$elm_spa_seo_testing$Main$viewLink, model, 'section1', _lucamug$elm_spa_seo_testing$Main$Section1),
+					_0: A3(_lucamug$elm_spa_seo_testing$Main$viewLink, model, 'section2', _lucamug$elm_spa_seo_testing$Main$Section2),
 					_1: {
 						ctor: '::',
-						_0: A3(_lucamug$elm_spa_seo_testing$Main$viewLink, model, 'section2', _lucamug$elm_spa_seo_testing$Main$Section2),
+						_0: A3(_lucamug$elm_spa_seo_testing$Main$viewLink, model, 'section3', _lucamug$elm_spa_seo_testing$Main$Section3),
 						_1: {
 							ctor: '::',
-							_0: A3(_lucamug$elm_spa_seo_testing$Main$viewLink, model, 'section3', _lucamug$elm_spa_seo_testing$Main$Section3),
-							_1: {
-								ctor: '::',
-								_0: A3(_lucamug$elm_spa_seo_testing$Main$viewLink, model, 'sitemap', _lucamug$elm_spa_seo_testing$Main$Sitemap),
-								_1: {ctor: '[]'}
-							}
+							_0: A3(_lucamug$elm_spa_seo_testing$Main$viewLink, model, 'sitemap', _lucamug$elm_spa_seo_testing$Main$Sitemap),
+							_1: {ctor: '[]'}
 						}
 					}
 				}
 			}
 		});
 };
-var _lucamug$elm_spa_seo_testing$Main$view = function (model) {
+var _lucamug$elm_spa_seo_testing$Main$viewPage = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
 		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$h1,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(
+						_lucamug$elm_spa_seo_testing$Main$pathToName(
+							_lucamug$elm_spa_seo_testing$Main$routeToPath(model.route))),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$pre,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('dante'),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: function () {
+							var _p18 = model.route;
+							switch (_p18.ctor) {
+								case 'Section1':
+									return _elm_lang$html$Html$text(_lucamug$elm_spa_seo_testing$Main$section1);
+								case 'Section2':
+									return _elm_lang$html$Html$text(_lucamug$elm_spa_seo_testing$Main$section2);
+								case 'Section3':
+									return _elm_lang$html$Html$text(_lucamug$elm_spa_seo_testing$Main$section3);
+								case 'Top':
+									return _lucamug$elm_spa_seo_testing$Main$viewTop;
+								case 'Sitemap':
+									return A2(
+										_elm_lang$html$Html$textarea,
+										{ctor: '[]'},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text(
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													_lucamug$elm_spa_seo_testing$Main$routeToSurgeUrl(_lucamug$elm_spa_seo_testing$Main$Top),
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														'\n',
+														A2(
+															_elm_lang$core$Basics_ops['++'],
+															_lucamug$elm_spa_seo_testing$Main$routeToSurgeUrl(_lucamug$elm_spa_seo_testing$Main$Section1),
+															A2(
+																_elm_lang$core$Basics_ops['++'],
+																'\n',
+																A2(
+																	_elm_lang$core$Basics_ops['++'],
+																	_lucamug$elm_spa_seo_testing$Main$routeToSurgeUrl(_lucamug$elm_spa_seo_testing$Main$Section2),
+																	A2(
+																		_elm_lang$core$Basics_ops['++'],
+																		'\n',
+																		A2(
+																			_elm_lang$core$Basics_ops['++'],
+																			_lucamug$elm_spa_seo_testing$Main$routeToSurgeUrl(_lucamug$elm_spa_seo_testing$Main$Section3),
+																			A2(
+																				_elm_lang$core$Basics_ops['++'],
+																				'\n',
+																				_lucamug$elm_spa_seo_testing$Main$routeToSurgeUrl(_lucamug$elm_spa_seo_testing$Main$Sitemap)))))))))),
+											_1: {ctor: '[]'}
+										});
+								default:
+									return _elm_lang$html$Html$text('Page not Found');
+							}
+						}(),
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _lucamug$elm_spa_seo_testing$Main$view = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$id('app'),
+			_1: {ctor: '[]'}
+		},
 		{
 			ctor: '::',
 			_0: A3(
@@ -14535,7 +14684,11 @@ var _lucamug$elm_spa_seo_testing$Main$view = function (model) {
 					ctor: '::',
 					_0: A2(
 						_elm_lang$html$Html$p,
-						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('highlight'),
+							_1: {ctor: '[]'}
+						},
 						{
 							ctor: '::',
 							_0: _elm_lang$html$Html$text(
@@ -14607,7 +14760,7 @@ var _lucamug$elm_spa_seo_testing$Main$main = A2(
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
 if (typeof _lucamug$elm_spa_seo_testing$Main$main !== 'undefined') {
-    _lucamug$elm_spa_seo_testing$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Main.Msg":{"args":[],"tags":{"NewApi1Data":["Result.Result Http.Error Main.Api1Data"],"NewApi2Data":["Result.Result Http.Error Main.Api2Data"],"UrlChange":["Navigation.Location"],"FetchApi1Data":["String"],"ChangeLocation":["String"],"FetchApi2Data":["String"]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}},"aliases":{"Main.Api2Data":{"args":[],"type":"{ url : String }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Main.Api1Data":{"args":[],"type":"{ url : String }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Main.Msg"},"versions":{"elm":"0.18.0"}});
+    _lucamug$elm_spa_seo_testing$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Main.Msg":{"args":[],"tags":{"NewApi1Data":["Result.Result Http.Error Main.Api1Data"],"AddTimeToModel":["Time.Time"],"OnTitleChanged":["String"],"NewApi2Data":["Result.Result Http.Error Main.Api2Data"],"UrlChange":["Navigation.Location"],"FetchApi1Data":["String"],"ChangeLocation":["String"],"FetchApi2Data":["String"]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}},"aliases":{"Main.Api2Data":{"args":[],"type":"{ url : String }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Main.Api1Data":{"args":[],"type":"{ url : String }"},"Time.Time":{"args":[],"type":"Float"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Main.Msg"},"versions":{"elm":"0.18.0"}});
 }
 
 if (typeof define === "function" && define['amd'])

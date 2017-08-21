@@ -14,15 +14,29 @@
     </noscript>
     <script src="main.js"></script>
     <script type="text/javascript">
-        (function() {
+        (function(_window, _document) {
             var app = Elm.Main.fullscreen();
+            var _body = _document.body;
             var onUrlChange = function(page) {
-                document.title = page;
-                document.querySelector('meta[name="description"]').setAttribute("content", "Meta Description of the page " + page +
-                    ". This page is a test to check how Single Page Applications work well with Search Engines (SEO). Full article at...");
+                _window.requestAnimationFrame(function() {
+                    smoothTransition();
+                    app.ports.titleChanged.send(page);
+                    _document.title = page;
+                    _document.querySelector('meta[name="description"]').setAttribute("content", "Meta Description of the page " + page +
+                        ". This page is a test to check how Single Page Applications work well with Search Engines (SEO). Full article at...");
+                });
             };
+            var smoothTransition = function() {
+                _body.classList.add("subAppHide");
+                _body.classList.remove("subAppShow");
+                setTimeout(function() {
+                    _body.classList.add("subAppShow");
+                    _body.classList.remove("subAppHide");
+                }, 100);
+            };
+            app.ports.titleChanged.send(_document.title);
             app.ports.urlChange.subscribe(onUrlChange);
-        })();
+        })(window, window.document);
         // Google Analytics START
         (function(i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;

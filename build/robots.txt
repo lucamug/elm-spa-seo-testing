@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: http://elm-spa-seo-testing.surge.sh/sitemap.txt
