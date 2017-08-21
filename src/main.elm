@@ -12,6 +12,7 @@ import Time
 import Http
 import Task
 import Regex
+import Time.DateTime
 
 
 port urlChange : String -> Cmd msg
@@ -347,7 +348,7 @@ titleForJs model =
             ++ ",Rem"
             ++ num2
             ++ ",Time"
-            ++ toString (model.time)
+            ++ Time.DateTime.toISO8601 (Time.DateTime.fromTimestamp model.time)
             ++ ","
             ++ model.location.pathname
 
