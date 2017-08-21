@@ -14,11 +14,6 @@ import Task
 import Regex
 
 
-(=>) : a -> b -> ( a, b )
-(=>) =
-    (,)
-
-
 port urlChange : String -> Cmd msg
 
 
@@ -202,8 +197,17 @@ view : Model -> Html Msg
 view model =
     div [ id "app" ]
         [ node "style" [] [ text css ]
+        , h1 [] [ text "SPA and SEO Testing" ]
         , viewNavigation model
-        , p [ class "highlight" ] [ text ("Title: " ++ (titleForJs model)) ]
+        , viewMetadata model
+        , viewPage model
+        ]
+
+
+viewMetadata : Model -> Html msg
+viewMetadata model =
+    div [ id "metadata" ]
+        [ p [ class "highlight" ] [ text ("Title: " ++ (titleForJs model)) ]
         , p [] [ text "V = Version, H = History length, Loc = Local API, Rem = Remote API" ]
         , p []
             [ text "History: "
@@ -212,7 +216,6 @@ view model =
                     (List.reverse (model.history))
                 )
             ]
-        , viewPage model
         ]
 
 
@@ -231,8 +234,12 @@ viewLink model path route =
             "/" ++ path
     in
         li
-            [ classList [ ( "selected", model.route == route ) ] ]
-            [ a [ href url, onLinkClick url ] [ text (pathToName path) ] ]
+            []
+            [ if model.route == route then
+                div [ class "selected" ] [ text (pathToName path) ]
+              else
+                a [ href url, onLinkClick url ] [ text (pathToName path) ]
+            ]
 
 
 viewNavigation : Model -> Html Msg
@@ -249,7 +256,7 @@ viewNavigation model =
 viewPage : Model -> Html Msg
 viewPage model =
     div []
-        [ h1 []
+        [ h2 []
             [ model.route
                 |> routeToPath
                 |> pathToName
@@ -401,14 +408,19 @@ subscriptions model =
         ]
 
 
-greenBright : String
-greenBright =
+mainBrightColor : String
+mainBrightColor =
     "#7effca"
 
 
-greenDark : String
-greenDark =
-    "#67caa1"
+mainDarkColor : String
+mainDarkColor =
+    "#4c9275"
+
+
+highlightColor : String
+highlightColor =
+    "#deff7e"
 
 
 css : String
@@ -424,40 +436,65 @@ css =
 }
 .history {
     display: inline-block;
-    border: 1px solid """ ++ greenDark ++ """;
-    margin: 1px 5px;
-    padding: 1px 5px;
+    background-color: """ ++ highlightColor ++ """;
+    margin: 0 2px;
 }
+
 .navigation {
     padding: 0;
 }
-.navigation a {
+.navigation li {
     display: inline-block;
+}
+.navigation a, .navigation div {
     padding: 10px;
 }
 .navigation .selected {
-    background-color: """ ++ greenBright ++ """;
+    background-color: """ ++ mainBrightColor ++ """;
+    color: black;
+}
+h2 {
+    color: """ ++ mainDarkColor ++ """;
+    margin-bottom: 2em;
 }
 h1 {
-    color: #67caa1;
+    color: """ ++ mainDarkColor ++ """;
+    font-size: 1em;
+    border-bottom: 2px solid """ ++ mainDarkColor ++ """;
+}
+a {
+    text-decoration: none;
+    color: """ ++ mainDarkColor ++ """;
+}
+a:hover {
+    background-color: """ ++ mainBrightColor ++ """;
+    color: black;
 }
 .dante::first-letter {
     font-size: 6em;
-    color: """ ++ greenDark ++ """;
+    color: """ ++ mainDarkColor ++ """;
     line-height: 30px;
 }
 pre {
     font-family: serif
 }
 .subAppHide .highlight{
-    background-color: #deff7e;
+    background-color: """ ++ highlightColor ++ """;
 }
 .subAppShow .highlight{
     transition: all 1000ms;
 }
 textarea {
     width: 100%;
-    height: 160px;
+    height: 80px;
+}
+#metadata {
+    font-size: small;
+    color: gray;
+    font-family: monospace;
+}
+#metadata p {
+    margin: 2px 0;
 }
 """
 
@@ -466,7 +503,7 @@ viewTop : Html msg
 viewTop =
     div []
         [ text """This is a test Single Page Application to
-verify the Googlebot (and other Search Engine crowlers)
+verify the Googlebot (and other Search Engine bots)
 capability to execute Javascript and Ajax calls."""
         , ul []
             [ li []

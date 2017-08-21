@@ -13980,7 +13980,7 @@ var _lucamug$elm_spa_seo_testing$Main$viewTop = A2(
 	{ctor: '[]'},
 	{
 		ctor: '::',
-		_0: _elm_lang$html$Html$text('This is a test Single Page Application to\nverify the Googlebot (and other Search Engine crowlers)\ncapability to execute Javascript and Ajax calls.'),
+		_0: _elm_lang$html$Html$text('This is a test Single Page Application to\nverify the Googlebot (and other Search Engine bots)\ncapability to execute Javascript and Ajax calls.'),
 		_1: {
 			ctor: '::',
 			_0: A2(
@@ -14056,24 +14056,61 @@ var _lucamug$elm_spa_seo_testing$Main$viewTop = A2(
 			_1: {ctor: '[]'}
 		}
 	});
-var _lucamug$elm_spa_seo_testing$Main$greenDark = '#67caa1';
-var _lucamug$elm_spa_seo_testing$Main$greenBright = '#7effca';
+var _lucamug$elm_spa_seo_testing$Main$highlightColor = '#deff7e';
+var _lucamug$elm_spa_seo_testing$Main$mainDarkColor = '#4c9275';
+var _lucamug$elm_spa_seo_testing$Main$mainBrightColor = '#7effca';
 var _lucamug$elm_spa_seo_testing$Main$css = A2(
 	_elm_lang$core$Basics_ops['++'],
-	'body {\n    color: #555;\n    margin: 10px;\n    font-family: sans-serif;\n    background-color: #eee;\n}\n.navigation li {\n    display: inline-block;\n}\n.history {\n    display: inline-block;\n    border: 1px solid ',
+	'body {\n    color: #555;\n    margin: 10px;\n    font-family: sans-serif;\n    background-color: #eee;\n}\n.navigation li {\n    display: inline-block;\n}\n.history {\n    display: inline-block;\n    background-color: ',
 	A2(
 		_elm_lang$core$Basics_ops['++'],
-		_lucamug$elm_spa_seo_testing$Main$greenDark,
+		_lucamug$elm_spa_seo_testing$Main$highlightColor,
 		A2(
 			_elm_lang$core$Basics_ops['++'],
-			';\n    margin: 1px 5px;\n    padding: 1px 5px;\n}\n.navigation {\n    padding: 0;\n}\n.navigation a {\n    display: inline-block;\n    padding: 10px;\n}\n.navigation .selected {\n    background-color: ',
+			';\n    margin: 0 2px;\n}\n\n.navigation {\n    padding: 0;\n}\n.navigation li {\n    display: inline-block;\n}\n.navigation a, .navigation div {\n    padding: 10px;\n}\n.navigation .selected {\n    background-color: ',
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				_lucamug$elm_spa_seo_testing$Main$greenBright,
+				_lucamug$elm_spa_seo_testing$Main$mainBrightColor,
 				A2(
 					_elm_lang$core$Basics_ops['++'],
-					';\n}\nh1 {\n    color: #67caa1;\n}\n.dante::first-letter {\n    font-size: 6em;\n    color: ',
-					A2(_elm_lang$core$Basics_ops['++'], _lucamug$elm_spa_seo_testing$Main$greenDark, ';\n    line-height: 30px;\n}\npre {\n    font-family: serif\n}\n.subAppHide .highlight{\n    background-color: #deff7e;\n}\n.subAppShow .highlight{\n    transition: all 1000ms;\n}\ntextarea {\n    width: 100%;\n    height: 160px;\n}\n'))))));
+					';\n    color: black;\n}\nh2 {\n    color: ',
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						_lucamug$elm_spa_seo_testing$Main$mainDarkColor,
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							';\n    margin-bottom: 2em;\n}\nh1 {\n    color: ',
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								_lucamug$elm_spa_seo_testing$Main$mainDarkColor,
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									';\n    font-size: 1em;\n    border-bottom: 2px solid ',
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										_lucamug$elm_spa_seo_testing$Main$mainDarkColor,
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											';\n}\na {\n    text-decoration: none;\n    color: ',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_lucamug$elm_spa_seo_testing$Main$mainDarkColor,
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													';\n}\na:hover {\n    background-color: ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_lucamug$elm_spa_seo_testing$Main$mainBrightColor,
+														A2(
+															_elm_lang$core$Basics_ops['++'],
+															';\n    color: black;\n}\n.dante::first-letter {\n    font-size: 6em;\n    color: ',
+															A2(
+																_elm_lang$core$Basics_ops['++'],
+																_lucamug$elm_spa_seo_testing$Main$mainDarkColor,
+																A2(
+																	_elm_lang$core$Basics_ops['++'],
+																	';\n    line-height: 30px;\n}\npre {\n    font-family: serif\n}\n.subAppHide .highlight{\n    background-color: ',
+																	A2(_elm_lang$core$Basics_ops['++'], _lucamug$elm_spa_seo_testing$Main$highlightColor, ';\n}\n.subAppShow .highlight{\n    transition: all 1000ms;\n}\ntextarea {\n    width: 100%;\n    height: 80px;\n}\n#metadata {\n    font-size: small;\n    color: gray;\n    font-family: monospace;\n}\n#metadata p {\n    margin: 2px 0;\n}\n'))))))))))))))))));
 var _lucamug$elm_spa_seo_testing$Main$extractNumber = function (text) {
 	var number = A3(
 		_elm_lang$core$Regex$find,
@@ -14124,6 +14161,80 @@ var _lucamug$elm_spa_seo_testing$Main$titleForJs = function (model) {
 											_elm_lang$core$Basics$toString(model.time),
 											A2(_elm_lang$core$Basics_ops['++'], ',', model.location.pathname)))))))))));
 };
+var _lucamug$elm_spa_seo_testing$Main$viewMetadata = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$id('metadata'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$p,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('highlight'),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							'Title: ',
+							_lucamug$elm_spa_seo_testing$Main$titleForJs(model))),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$p,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('V = Version, H = History length, Loc = Local API, Rem = Remote API'),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$p,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('History: '),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$span,
+									{ctor: '[]'},
+									A2(
+										_elm_lang$core$List$map,
+										function (item) {
+											return A2(
+												_elm_lang$html$Html$span,
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$class('history'),
+													_1: {ctor: '[]'}
+												},
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html$text(item),
+													_1: {ctor: '[]'}
+												});
+										},
+										_elm_lang$core$List$reverse(model.history))),
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {ctor: '[]'}
+				}
+			}
+		});
+};
 var _lucamug$elm_spa_seo_testing$Main$routeToPath = function (route) {
 	var _p1 = route;
 	switch (_p1.ctor) {
@@ -14159,11 +14270,6 @@ var _lucamug$elm_spa_seo_testing$Main$capitalize = function (str) {
 var _lucamug$elm_spa_seo_testing$Main$pathToName = function (path) {
 	return _elm_lang$core$Native_Utils.eq(path, '') ? 'Home' : _lucamug$elm_spa_seo_testing$Main$capitalize(path);
 };
-var _lucamug$elm_spa_seo_testing$Main_ops = _lucamug$elm_spa_seo_testing$Main_ops || {};
-_lucamug$elm_spa_seo_testing$Main_ops['=>'] = F2(
-	function (v0, v1) {
-		return {ctor: '_Tuple2', _0: v0, _1: v1};
-	});
 var _lucamug$elm_spa_seo_testing$Main$urlChange = _elm_lang$core$Native_Platform.outgoingPort(
 	'urlChange',
 	function (v) {
@@ -14350,23 +14456,22 @@ var _lucamug$elm_spa_seo_testing$Main$viewLink = F3(
 		var url = A2(_elm_lang$core$Basics_ops['++'], '/', path);
 		return A2(
 			_elm_lang$html$Html$li,
+			{ctor: '[]'},
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$classList(
+				_0: _elm_lang$core$Native_Utils.eq(model.route, route) ? A2(
+					_elm_lang$html$Html$div,
 					{
 						ctor: '::',
-						_0: {
-							ctor: '_Tuple2',
-							_0: 'selected',
-							_1: _elm_lang$core$Native_Utils.eq(model.route, route)
-						},
+						_0: _elm_lang$html$Html_Attributes$class('selected'),
 						_1: {ctor: '[]'}
-					}),
-				_1: {ctor: '[]'}
-			},
-			{
-				ctor: '::',
-				_0: A2(
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(
+							_lucamug$elm_spa_seo_testing$Main$pathToName(path)),
+						_1: {ctor: '[]'}
+					}) : A2(
 					_elm_lang$html$Html$a,
 					{
 						ctor: '::',
@@ -14583,7 +14688,7 @@ var _lucamug$elm_spa_seo_testing$Main$viewPage = function (model) {
 		{
 			ctor: '::',
 			_0: A2(
-				_elm_lang$html$Html$h1,
+				_elm_lang$html$Html$h2,
 				{ctor: '[]'},
 				{
 					ctor: '::',
@@ -14679,73 +14784,24 @@ var _lucamug$elm_spa_seo_testing$Main$view = function (model) {
 				}),
 			_1: {
 				ctor: '::',
-				_0: _lucamug$elm_spa_seo_testing$Main$viewNavigation(model),
+				_0: A2(
+					_elm_lang$html$Html$h1,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('SPA and SEO Testing'),
+						_1: {ctor: '[]'}
+					}),
 				_1: {
 					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$p,
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('highlight'),
-							_1: {ctor: '[]'}
-						},
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html$text(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'Title: ',
-									_lucamug$elm_spa_seo_testing$Main$titleForJs(model))),
-							_1: {ctor: '[]'}
-						}),
+					_0: _lucamug$elm_spa_seo_testing$Main$viewNavigation(model),
 					_1: {
 						ctor: '::',
-						_0: A2(
-							_elm_lang$html$Html$p,
-							{ctor: '[]'},
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html$text('V = Version, H = History length, Loc = Local API, Rem = Remote API'),
-								_1: {ctor: '[]'}
-							}),
+						_0: _lucamug$elm_spa_seo_testing$Main$viewMetadata(model),
 						_1: {
 							ctor: '::',
-							_0: A2(
-								_elm_lang$html$Html$p,
-								{ctor: '[]'},
-								{
-									ctor: '::',
-									_0: _elm_lang$html$Html$text('History: '),
-									_1: {
-										ctor: '::',
-										_0: A2(
-											_elm_lang$html$Html$span,
-											{ctor: '[]'},
-											A2(
-												_elm_lang$core$List$map,
-												function (item) {
-													return A2(
-														_elm_lang$html$Html$span,
-														{
-															ctor: '::',
-															_0: _elm_lang$html$Html_Attributes$class('history'),
-															_1: {ctor: '[]'}
-														},
-														{
-															ctor: '::',
-															_0: _elm_lang$html$Html$text(item),
-															_1: {ctor: '[]'}
-														});
-												},
-												_elm_lang$core$List$reverse(model.history))),
-										_1: {ctor: '[]'}
-									}
-								}),
-							_1: {
-								ctor: '::',
-								_0: _lucamug$elm_spa_seo_testing$Main$viewPage(model),
-								_1: {ctor: '[]'}
-							}
+							_0: _lucamug$elm_spa_seo_testing$Main$viewPage(model),
+							_1: {ctor: '[]'}
 						}
 					}
 				}
