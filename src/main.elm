@@ -29,6 +29,7 @@ type Msg
     | FetchApi1Data String
     | FetchApi2Data String
     | AddTimeToModel Time.Time
+    | Tick Time.Time
     | OnTitleChanged String
 
 
@@ -40,7 +41,8 @@ type alias Model =
     , api2Data : String
     , location : Navigation.Location
     , version : String
-    , time : Time.Time
+    , initialTime : Time.Time
+    , presentTime : Time.Time
     }
 
 
@@ -173,7 +175,7 @@ update msg model =
         AddTimeToModel time ->
             let
                 newModel =
-                    { model | time = time }
+                    { model | initialTime = time }
             in
                 ( newModel, updateTitleAndMetaDescription newModel )
 
@@ -183,6 +185,13 @@ update msg model =
                     title :: model.titleHistory
             in
                 ( { model | titleHistory = newTitleHistory }, Cmd.none )
+
+        Tick newTime ->
+            let
+                newModel =
+                    { model | presentTime = newTime }
+            in
+                ( newModel, updateTitleAndMetaDescription newModel )
 
 
 onLinkClick : String -> Attribute Msg
@@ -322,8 +331,9 @@ initModel location =
     , api1Data = ""
     , api2Data = ""
     , location = location
-    , version = "04"
-    , time = 0
+    , version = "5"
+    , initialTime = 0
+    , presentTime = 0
     }
 
 
@@ -338,17 +348,25 @@ titleForJs model =
 
         historyLength =
             toString (List.length model.history)
+
+        time =
+            if model.presentTime > 0 then
+                toString (round ((model.presentTime - model.initialTime) / 1000))
+            else
+                "0"
     in
         "V"
             ++ model.version
+            ++ ",T"
+            ++ time
             ++ ",H"
             ++ historyLength
             ++ ",Loc"
             ++ num1
             ++ ",Rem"
             ++ num2
-            ++ ",Time"
-            ++ Time.DateTime.toISO8601 (Time.DateTime.fromTimestamp model.time)
+            ++ ","
+            ++ Time.DateTime.toISO8601 (Time.DateTime.fromTimestamp model.initialTime)
             ++ ","
             ++ model.location.pathname
 
@@ -406,6 +424,7 @@ subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
         [ titleChanged OnTitleChanged
+        , Time.every Time.second Tick
         ]
 
 

@@ -16211,6 +16211,8 @@ var _lucamug$elm_spa_seo_testing$Main$extractNumber = function (text) {
 	}
 };
 var _lucamug$elm_spa_seo_testing$Main$titleForJs = function (model) {
+	var time = (_elm_lang$core$Native_Utils.cmp(model.presentTime, 0) > 0) ? _elm_lang$core$Basics$toString(
+		_elm_lang$core$Basics$round((model.presentTime - model.initialTime) / 1000)) : '0';
 	var historyLength = _elm_lang$core$Basics$toString(
 		_elm_lang$core$List$length(model.history));
 	var num2 = _lucamug$elm_spa_seo_testing$Main$extractNumber(model.api2Data);
@@ -16223,30 +16225,36 @@ var _lucamug$elm_spa_seo_testing$Main$titleForJs = function (model) {
 			model.version,
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				',H',
+				',T',
 				A2(
 					_elm_lang$core$Basics_ops['++'],
-					historyLength,
+					time,
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						',Loc',
+						',H',
 						A2(
 							_elm_lang$core$Basics_ops['++'],
-							num1,
+							historyLength,
 							A2(
 								_elm_lang$core$Basics_ops['++'],
-								',Rem',
+								',Loc',
 								A2(
 									_elm_lang$core$Basics_ops['++'],
-									num2,
+									num1,
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										',Time',
+										',Rem',
 										A2(
 											_elm_lang$core$Basics_ops['++'],
-											_Bogdanp$elm_time$Time_DateTime$toISO8601(
-												_Bogdanp$elm_time$Time_DateTime$fromTimestamp(model.time)),
-											A2(_elm_lang$core$Basics_ops['++'], ',', model.location.pathname)))))))))));
+											num2,
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												',',
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													_Bogdanp$elm_time$Time_DateTime$toISO8601(
+														_Bogdanp$elm_time$Time_DateTime$fromTimestamp(model.initialTime)),
+													A2(_elm_lang$core$Basics_ops['++'], ',', model.location.pathname)))))))))))));
 };
 var _lucamug$elm_spa_seo_testing$Main$viewMetadata = function (model) {
 	return A2(
@@ -16367,9 +16375,9 @@ var _lucamug$elm_spa_seo_testing$Main$updateTitleAndMetaDescription = function (
 		_lucamug$elm_spa_seo_testing$Main$titleForJs(model));
 };
 var _lucamug$elm_spa_seo_testing$Main$titleChanged = _elm_lang$core$Native_Platform.incomingPort('titleChanged', _elm_lang$core$Json_Decode$string);
-var _lucamug$elm_spa_seo_testing$Main$Model = F8(
-	function (a, b, c, d, e, f, g, h) {
-		return {route: a, history: b, titleHistory: c, api1Data: d, api2Data: e, location: f, version: g, time: h};
+var _lucamug$elm_spa_seo_testing$Main$Model = F9(
+	function (a, b, c, d, e, f, g, h, i) {
+		return {route: a, history: b, titleHistory: c, api1Data: d, api2Data: e, location: f, version: g, initialTime: h, presentTime: i};
 	});
 var _lucamug$elm_spa_seo_testing$Main$Api1Data = function (a) {
 	return {url: a};
@@ -16402,12 +16410,19 @@ var _lucamug$elm_spa_seo_testing$Main$api2Decoder = A2(
 var _lucamug$elm_spa_seo_testing$Main$OnTitleChanged = function (a) {
 	return {ctor: 'OnTitleChanged', _0: a};
 };
+var _lucamug$elm_spa_seo_testing$Main$Tick = function (a) {
+	return {ctor: 'Tick', _0: a};
+};
 var _lucamug$elm_spa_seo_testing$Main$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$batch(
 		{
 			ctor: '::',
 			_0: _lucamug$elm_spa_seo_testing$Main$titleChanged(_lucamug$elm_spa_seo_testing$Main$OnTitleChanged),
-			_1: {ctor: '[]'}
+			_1: {
+				ctor: '::',
+				_0: A2(_elm_lang$core$Time$every, _elm_lang$core$Time$second, _lucamug$elm_spa_seo_testing$Main$Tick),
+				_1: {ctor: '[]'}
+			}
 		});
 };
 var _lucamug$elm_spa_seo_testing$Main$AddTimeToModel = function (a) {
@@ -16697,13 +16712,13 @@ var _lucamug$elm_spa_seo_testing$Main$update = F2(
 			case 'AddTimeToModel':
 				var newModel = _elm_lang$core$Native_Utils.update(
 					model,
-					{time: _p14._0});
+					{initialTime: _p14._0});
 				return {
 					ctor: '_Tuple2',
 					_0: newModel,
 					_1: _lucamug$elm_spa_seo_testing$Main$updateTitleAndMetaDescription(newModel)
 				};
-			default:
+			case 'OnTitleChanged':
 				var newTitleHistory = {ctor: '::', _0: _p14._0, _1: model.titleHistory};
 				return {
 					ctor: '_Tuple2',
@@ -16711,6 +16726,15 @@ var _lucamug$elm_spa_seo_testing$Main$update = F2(
 						model,
 						{titleHistory: newTitleHistory}),
 					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			default:
+				var newModel = _elm_lang$core$Native_Utils.update(
+					model,
+					{presentTime: _p14._0});
+				return {
+					ctor: '_Tuple2',
+					_0: newModel,
+					_1: _lucamug$elm_spa_seo_testing$Main$updateTitleAndMetaDescription(newModel)
 				};
 		}
 	});
@@ -16726,8 +16750,9 @@ var _lucamug$elm_spa_seo_testing$Main$initModel = function (location) {
 		api1Data: '',
 		api2Data: '',
 		location: location,
-		version: '04',
-		time: 0
+		version: '5',
+		initialTime: 0,
+		presentTime: 0
 	};
 };
 var _lucamug$elm_spa_seo_testing$Main$init = function (location) {
@@ -16903,7 +16928,7 @@ var _lucamug$elm_spa_seo_testing$Main$main = A2(
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
 if (typeof _lucamug$elm_spa_seo_testing$Main$main !== 'undefined') {
-    _lucamug$elm_spa_seo_testing$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Main.Msg":{"args":[],"tags":{"NewApi1Data":["Result.Result Http.Error Main.Api1Data"],"AddTimeToModel":["Time.Time"],"OnTitleChanged":["String"],"NewApi2Data":["Result.Result Http.Error Main.Api2Data"],"UrlChange":["Navigation.Location"],"FetchApi1Data":["String"],"ChangeLocation":["String"],"FetchApi2Data":["String"]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}},"aliases":{"Main.Api2Data":{"args":[],"type":"{ url : String }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Main.Api1Data":{"args":[],"type":"{ url : String }"},"Time.Time":{"args":[],"type":"Float"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Main.Msg"},"versions":{"elm":"0.18.0"}});
+    _lucamug$elm_spa_seo_testing$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Main.Msg":{"args":[],"tags":{"Tick":["Time.Time"],"NewApi1Data":["Result.Result Http.Error Main.Api1Data"],"AddTimeToModel":["Time.Time"],"OnTitleChanged":["String"],"NewApi2Data":["Result.Result Http.Error Main.Api2Data"],"UrlChange":["Navigation.Location"],"FetchApi1Data":["String"],"ChangeLocation":["String"],"FetchApi2Data":["String"]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}},"aliases":{"Main.Api2Data":{"args":[],"type":"{ url : String }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Main.Api1Data":{"args":[],"type":"{ url : String }"},"Time.Time":{"args":[],"type":"Float"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Main.Msg"},"versions":{"elm":"0.18.0"}});
 }
 
 if (typeof define === "function" && define['amd'])
