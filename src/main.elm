@@ -218,7 +218,7 @@ viewMetadata : Model -> Html msg
 viewMetadata model =
     div [ id "metadata" ]
         [ p [ class "highlight" ] [ text ("Title: " ++ (titleForJs model)) ]
-        , p [] [ text "V = Version, H = History length, Loc = Local API, Rem = Remote API" ]
+        , p [] [ text "V = Version, H = History length, A = Type A Ajax, B = Type B Ajax" ]
         , p []
             [ text "History: "
             , span []
@@ -331,7 +331,7 @@ initModel location =
     , api1Data = ""
     , api2Data = ""
     , location = location
-    , version = "5"
+    , version = "6"
     , initialTime = 0
     , presentTime = 0
     }
@@ -361,9 +361,9 @@ titleForJs model =
             ++ time
             ++ ",H"
             ++ historyLength
-            ++ ",Loc"
+            ++ ",A"
             ++ num1
-            ++ ",Rem"
+            ++ ",B"
             ++ num2
             ++ ","
             ++ Time.DateTime.toISO8601 (Time.DateTime.fromTimestamp model.initialTime)
@@ -376,15 +376,15 @@ initCmd model location =
     Cmd.batch
         [ Task.perform AddTimeToModel Time.now
         , Task.perform (\_ -> FetchApi1Data "10.json") (Process.sleep (10.0 * Time.second))
-        , Task.perform (\_ -> FetchApi1Data "06.json") (Process.sleep (6.0 * Time.second))
-        , Task.perform (\_ -> FetchApi1Data "03.json") (Process.sleep (3.0 * Time.second))
-        , Task.perform (\_ -> FetchApi1Data "01.json") (Process.sleep (1.0 * Time.second))
-        , Task.perform (\_ -> FetchApi1Data "00.json") (Process.sleep (0.0 * Time.second))
+        , Task.perform (\_ -> FetchApi1Data "6.json") (Process.sleep (6.0 * Time.second))
+        , Task.perform (\_ -> FetchApi1Data "3.json") (Process.sleep (3.0 * Time.second))
+        , Task.perform (\_ -> FetchApi1Data "1.json") (Process.sleep (1.0 * Time.second))
+        , Task.perform (\_ -> FetchApi1Data "0.json") (Process.sleep (0.0 * Time.second))
         , Task.perform (\_ -> FetchApi2Data "https://httpbin.org/delay/10") (Process.sleep (0.0 * Time.second))
-        , Task.perform (\_ -> FetchApi2Data "https://httpbin.org/delay/06") (Process.sleep (0.0 * Time.second))
-        , Task.perform (\_ -> FetchApi2Data "https://httpbin.org/delay/03") (Process.sleep (0.0 * Time.second))
-        , Task.perform (\_ -> FetchApi2Data "https://httpbin.org/delay/01") (Process.sleep (0.0 * Time.second))
-        , Task.perform (\_ -> FetchApi2Data "https://httpbin.org/delay/00") (Process.sleep (0.0 * Time.second))
+        , Task.perform (\_ -> FetchApi2Data "https://httpbin.org/delay/6") (Process.sleep (0.0 * Time.second))
+        , Task.perform (\_ -> FetchApi2Data "https://httpbin.org/delay/3") (Process.sleep (0.0 * Time.second))
+        , Task.perform (\_ -> FetchApi2Data "https://httpbin.org/delay/1") (Process.sleep (0.0 * Time.second))
+        , Task.perform (\_ -> FetchApi2Data "https://httpbin.org/delay/0") (Process.sleep (0.0 * Time.second))
         ]
 
 
@@ -392,7 +392,7 @@ extractNumber : String -> String
 extractNumber text =
     let
         number =
-            Regex.find Regex.All (Regex.regex "\\d\\d") text
+            Regex.find Regex.All (Regex.regex "\\d{1,2}") text
     in
         case List.head number of
             Nothing ->
