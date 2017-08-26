@@ -12,18 +12,24 @@ Check out [the full writeup](https://medium.com/@l.mugnaini/spa-and-seo-is-googl
 
 If you don't already have `elm` and `elm-live`:
 
-> npm install -g elm elm-live
+```
+$ npm install -g elm elm-live
+```
 
 Then, to build everything:
 
-> elm-live --dir=build --output=build/main.js src/main.elm --pushstate --open --debug
+```
+$ elm-live --dir=build --output=build/main.js src/main.elm --pushstate --open --debug
+```
 
 (Leave off the `--debug` if you don't want the time-traveling debugger.)
 
 ## To deploy
 
-> cd build
-> surge
+```
+$ cd build
+$ surge
+```
 
 ## Links
 
