@@ -331,7 +331,7 @@ initModel location =
     , api1Data = ""
     , api2Data = ""
     , location = location
-    , version = "6"
+    , version = "7"
     , initialTime = 0
     , presentTime = 0
     }
@@ -509,7 +509,7 @@ textarea {
     height: 80px;
 }
 #metadata {
-    font-size: small;
+    font-size: 2em;
     color: gray;
     font-family: monospace;
 }

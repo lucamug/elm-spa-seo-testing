@@ -12237,7 +12237,7 @@ var _lucamug$elm_spa_seo_testing$Main$css = A2(
 																A2(
 																	_elm_lang$core$Basics_ops['++'],
 																	';\n    line-height: 30px;\n}\npre {\n    font-family: serif\n}\n.subAppHide .highlight{\n    background-color: ',
-																	A2(_elm_lang$core$Basics_ops['++'], _lucamug$elm_spa_seo_testing$Main$highlightColor, ';\n}\n.subAppShow .highlight{\n    transition: all 1000ms;\n}\ntextarea {\n    width: 100%;\n    height: 80px;\n}\n#metadata {\n    font-size: small;\n    color: gray;\n    font-family: monospace;\n}\n#metadata p {\n    margin: 2px 0;\n}\n'))))))))))))))))));
+																	A2(_elm_lang$core$Basics_ops['++'], _lucamug$elm_spa_seo_testing$Main$highlightColor, ';\n}\n.subAppShow .highlight{\n    transition: all 1000ms;\n}\ntextarea {\n    width: 100%;\n    height: 80px;\n}\n#metadata {\n    font-size: 2em;\n    color: gray;\n    font-family: monospace;\n}\n#metadata p {\n    margin: 2px 0;\n}\n'))))))))))))))))));
 var _lucamug$elm_spa_seo_testing$Main$extractNumber = function (text) {
 	var number = A3(
 		_elm_lang$core$Regex$find,
@@ -12791,7 +12791,7 @@ var _lucamug$elm_spa_seo_testing$Main$initModel = function (location) {
 		api1Data: '',
 		api2Data: '',
 		location: location,
-		version: '6',
+		version: '7',
 		initialTime: 0,
 		presentTime: 0
 	};
