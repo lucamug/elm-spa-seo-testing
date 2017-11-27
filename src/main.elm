@@ -331,7 +331,7 @@ initModel location =
     , api1Data = ""
     , api2Data = ""
     , location = location
-    , version = "7"
+    , version = "8"
     , initialTime = 0
     , presentTime = 0
     }
