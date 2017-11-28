@@ -16104,7 +16104,7 @@ var _lucamug$elm_spa_seo_testing$Main$viewTop = A2(
 									_elm_lang$html$Html$a,
 									{
 										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$href('https://www.google.it/search?q=site:elm-spa-seo-testing.surge.sh'),
+										_0: _elm_lang$html$Html_Attributes$href('https://www.google.it/search?q=site:elm-spa-seo-testing.guupa.com'),
 										_1: {ctor: '[]'}
 									},
 									{
@@ -16350,7 +16350,7 @@ var _lucamug$elm_spa_seo_testing$Main$routeToPath = function (route) {
 var _lucamug$elm_spa_seo_testing$Main$routeToSurgeUrl = function (route) {
 	return A2(
 		_elm_lang$core$Basics_ops['++'],
-		'http://elm-spa-seo-testing.surge.sh/',
+		'http://elm-spa-seo-testing.guupa.com/',
 		_lucamug$elm_spa_seo_testing$Main$routeToPath(route));
 };
 var _lucamug$elm_spa_seo_testing$Main$capitalize = function (str) {

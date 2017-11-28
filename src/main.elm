@@ -309,7 +309,7 @@ viewPage model =
 
 routeToSurgeUrl : Route -> String
 routeToSurgeUrl route =
-    "http://elm-spa-seo-testing.surge.sh/" ++ (routeToPath route)
+    "http://elm-spa-seo-testing.guupa.com/" ++ (routeToPath route)
 
 
 init : Navigation.Location -> ( Model, Cmd Msg )
@@ -530,7 +530,7 @@ capability to execute Javascript and Ajax calls."""
                 [ a [ href "https://medium.com/@l.mugnaini/spa-and-seo-is-googlebot-able-to-render-a-single-page-application-1f74e706ab11" ] [ text "Full Article" ]
                 ]
             , li []
-                [ a [ href "https://www.google.it/search?q=site:elm-spa-seo-testing.surge.sh" ] [ text "Search Result" ]
+                [ a [ href "https://www.google.it/search?q=site:elm-spa-seo-testing.guupa.com" ] [ text "Search Result" ]
                 ]
             , li []
                 [ a [ href "https://github.com/lucamug/elm-spa-seo-testing" ] [ text "Code" ]
