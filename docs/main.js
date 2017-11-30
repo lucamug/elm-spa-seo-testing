@@ -16219,42 +16219,48 @@ var _lucamug$elm_spa_seo_testing$Main$titleForJs = function (model) {
 	var num1 = _lucamug$elm_spa_seo_testing$Main$extractNumber(model.api1Data);
 	return A2(
 		_elm_lang$core$Basics_ops['++'],
-		'V',
+		model.title,
 		A2(
 			_elm_lang$core$Basics_ops['++'],
-			model.version,
+			' - ',
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				',T',
+				'V',
 				A2(
 					_elm_lang$core$Basics_ops['++'],
-					time,
+					model.version,
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						',H',
+						',T',
 						A2(
 							_elm_lang$core$Basics_ops['++'],
-							historyLength,
+							time,
 							A2(
 								_elm_lang$core$Basics_ops['++'],
-								',A',
+								',H',
 								A2(
 									_elm_lang$core$Basics_ops['++'],
-									num1,
+									historyLength,
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										',B',
+										',A',
 										A2(
 											_elm_lang$core$Basics_ops['++'],
-											num2,
+											num1,
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												',',
+												',B',
 												A2(
 													_elm_lang$core$Basics_ops['++'],
-													_Bogdanp$elm_time$Time_DateTime$toISO8601(
-														_Bogdanp$elm_time$Time_DateTime$fromTimestamp(model.initialTime)),
-													A2(_elm_lang$core$Basics_ops['++'], ',', model.location.pathname)))))))))))));
+													num2,
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														',',
+														A2(
+															_elm_lang$core$Basics_ops['++'],
+															_Bogdanp$elm_time$Time_DateTime$toISO8601(
+																_Bogdanp$elm_time$Time_DateTime$fromTimestamp(model.initialTime)),
+															A2(_elm_lang$core$Basics_ops['++'], ',', model.location.pathname)))))))))))))));
 };
 var _lucamug$elm_spa_seo_testing$Main$viewMetadata = function (model) {
 	return A2(
@@ -16375,10 +16381,27 @@ var _lucamug$elm_spa_seo_testing$Main$updateTitleAndMetaDescription = function (
 		_lucamug$elm_spa_seo_testing$Main$titleForJs(model));
 };
 var _lucamug$elm_spa_seo_testing$Main$titleChanged = _elm_lang$core$Native_Platform.incomingPort('titleChanged', _elm_lang$core$Json_Decode$string);
-var _lucamug$elm_spa_seo_testing$Main$Model = F9(
-	function (a, b, c, d, e, f, g, h, i) {
-		return {route: a, history: b, titleHistory: c, api1Data: d, api2Data: e, location: f, version: g, initialTime: h, presentTime: i};
-	});
+var _lucamug$elm_spa_seo_testing$Main$Model = function (a) {
+	return function (b) {
+		return function (c) {
+			return function (d) {
+				return function (e) {
+					return function (f) {
+						return function (g) {
+							return function (h) {
+								return function (i) {
+									return function (j) {
+										return {route: a, history: b, titleHistory: c, api1Data: d, api2Data: e, location: f, version: g, initialTime: h, presentTime: i, title: j};
+									};
+								};
+							};
+						};
+					};
+				};
+			};
+		};
+	};
+};
 var _lucamug$elm_spa_seo_testing$Main$Api1Data = function (a) {
 	return {url: a};
 };
@@ -16750,9 +16773,10 @@ var _lucamug$elm_spa_seo_testing$Main$initModel = function (location) {
 		api1Data: '',
 		api2Data: '',
 		location: location,
-		version: '8',
+		version: '9',
 		initialTime: 0,
-		presentTime: 0
+		presentTime: 0,
+		title: 'SPA and SEO Testing'
 	};
 };
 var _lucamug$elm_spa_seo_testing$Main$init = function (location) {
@@ -16901,7 +16925,7 @@ var _lucamug$elm_spa_seo_testing$Main$view = function (model) {
 					{ctor: '[]'},
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html$text('SPA and SEO Testing'),
+						_0: _elm_lang$html$Html$text(model.title),
 						_1: {ctor: '[]'}
 					}),
 				_1: {

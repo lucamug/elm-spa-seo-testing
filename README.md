@@ -21,6 +21,7 @@ Then, to build everything:
 ```
 $ elm-live --dir=docs --output=docs/main.js src/main.elm --pushstate --open --debug
 ```
+Then open http://localhost:8000/200.html (the app run on 200.html, this is a Surge requirement for SPA)
 
 (Leave off the `--debug` if you don't want the time-traveling debugger.)
 

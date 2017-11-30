@@ -43,6 +43,7 @@ type alias Model =
     , version : String
     , initialTime : Time.Time
     , presentTime : Time.Time
+    , title : String
     }
 
 
@@ -207,7 +208,7 @@ view : Model -> Html Msg
 view model =
     div [ id "app" ]
         [ node "style" [] [ text css ]
-        , h1 [] [ text "SPA and SEO Testing" ]
+        , h1 [] [ text model.title ]
         , viewNavigation model
         , viewMetadata model
         , viewPage model
@@ -331,9 +332,10 @@ initModel location =
     , api1Data = ""
     , api2Data = ""
     , location = location
-    , version = "8"
+    , version = "9"
     , initialTime = 0
     , presentTime = 0
+    , title = "SPA and SEO Testing"
     }
 
 
@@ -355,7 +357,9 @@ titleForJs model =
             else
                 "0"
     in
-        "V"
+        model.title
+            ++ " - "
+            ++ "V"
             ++ model.version
             ++ ",T"
             ++ time
