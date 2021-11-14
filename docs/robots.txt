@@ -6,4 +6,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: http://elm-spa-seo-testing.guupa.com/sitemap.txt
+Sitemap: https://elm-spa-seo-testing.guupa.com/sitemap.txt

@@ -1,5 +1,5 @@
-http://elm-spa-seo-testing.guupa.com/
-http://elm-spa-seo-testing.guupa.com/section1
-http://elm-spa-seo-testing.guupa.com/section2
-http://elm-spa-seo-testing.guupa.com/section3
-http://elm-spa-seo-testing.guupa.com/sitemap
+https://elm-spa-seo-testing.guupa.com/
+https://elm-spa-seo-testing.guupa.com/section1
+https://elm-spa-seo-testing.guupa.com/section2
+https://elm-spa-seo-testing.guupa.com/section3
+https://elm-spa-seo-testing.guupa.com/sitemap

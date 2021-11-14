@@ -16356,7 +16356,7 @@ var _lucamug$elm_spa_seo_testing$Main$routeToPath = function (route) {
 var _lucamug$elm_spa_seo_testing$Main$routeToSurgeUrl = function (route) {
 	return A2(
 		_elm_lang$core$Basics_ops['++'],
-		'http://elm-spa-seo-testing.guupa.com/',
+		'https://elm-spa-seo-testing.guupa.com/',
 		_lucamug$elm_spa_seo_testing$Main$routeToPath(route));
 };
 var _lucamug$elm_spa_seo_testing$Main$capitalize = function (str) {

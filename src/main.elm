@@ -310,7 +310,7 @@ viewPage model =
 
 routeToSurgeUrl : Route -> String
 routeToSurgeUrl route =
-    "http://elm-spa-seo-testing.guupa.com/" ++ (routeToPath route)
+    "https://elm-spa-seo-testing.guupa.com/" ++ (routeToPath route)
 
 
 init : Navigation.Location -> ( Model, Cmd Msg )
