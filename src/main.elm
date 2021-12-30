@@ -460,7 +460,7 @@ mainBrightColor =
 
 mainDarkColor : String
 mainDarkColor =
-    "#4c9275"
+    "black"
 
 
 highlightColor : String
@@ -471,10 +471,8 @@ highlightColor =
 css : String
 css =
     """body {
-    color: #555;
     margin: 10px;
     font-family: sans-serif;
-    background-color: #eee;
 }
 .navigation li {
     display: inline-block;
