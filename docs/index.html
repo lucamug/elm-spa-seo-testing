@@ -3,9 +3,14 @@
 
 <head>
     <meta charset="utf-8">
-    <title>No JS, No Ajax</title>
-    <meta name="description" content="No JS, No Ajax">
+    <title>No JS, No Ajax. V.2</title>
+    <meta name="description" content="No JS, No Ajax. V.2">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+    </style>
 </head>
 
 <body>
@@ -15,7 +20,7 @@
     <script src="main.js"></script>
     <script type="text/javascript">
         (function(_window, _document) {
-            var app = Elm.Main.fullscreen();
+            var app = Elm.Main.init();
             var _body = _document.body;
             var onUrlChange = function(page) {
                 _window.requestAnimationFrame(function() {

@@ -1,18 +1,20 @@
 port module Main exposing (..)
 
+import Browser
+import Browser.Navigation
 import Char
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import Json.Decode as Decode
-import Navigation
-import UrlParser
-import Process
-import Time
 import Http
-import Task
+import Iso8601
+import Json.Decode as Decode
+import Process
 import Regex
-import Time.DateTime
+import Task
+import Time
+import Url
+import Url.Parser
 
 
 port urlChange : String -> Cmd msg
@@ -22,27 +24,28 @@ port titleChanged : (String -> msg) -> Sub msg
 
 
 type Msg
-    = ChangeLocation String
-    | UrlChange Navigation.Location
+    = LinkClicked Browser.UrlRequest
+    | UrlChanged Url.Url
     | NewApi1Data (Result Http.Error Api1Data)
     | NewApi2Data (Result Http.Error Api2Data)
     | FetchApi1Data String
     | FetchApi2Data String
-    | AddTimeToModel Time.Time
-    | Tick Time.Time
+    | AddTimeToModel Time.Posix
+    | Tick Time.Posix
     | OnTitleChanged String
 
 
 type alias Model =
     { route : Route
+    , key : Browser.Navigation.Key
     , history : List String
     , titleHistory : List String
     , api1Data : String
     , api2Data : String
-    , location : Navigation.Location
+    , location : Url.Url
     , version : String
-    , initialTime : Time.Time
-    , presentTime : Time.Time
+    , initialTime : Time.Posix
+    , presentTime : Time.Posix
     , title : String
     }
 
@@ -67,17 +70,17 @@ capitalize str =
                 newFirstLetter =
                     Char.toUpper firstLetter
             in
-                String.cons newFirstLetter rest
+            String.cons newFirstLetter rest
 
 
-matchers : UrlParser.Parser (Route -> a) a
+matchers : Url.Parser.Parser (Route -> a) a
 matchers =
-    UrlParser.oneOf
-        [ UrlParser.map Top UrlParser.top
-        , UrlParser.map Section1 (UrlParser.s "section1")
-        , UrlParser.map Section2 (UrlParser.s "section2")
-        , UrlParser.map Section3 (UrlParser.s "section3")
-        , UrlParser.map Sitemap (UrlParser.s "sitemap")
+    Url.Parser.oneOf
+        [ Url.Parser.map Top Url.Parser.top
+        , Url.Parser.map Section1 (Url.Parser.s "section1")
+        , Url.Parser.map Section2 (Url.Parser.s "section2")
+        , Url.Parser.map Section3 (Url.Parser.s "section3")
+        , Url.Parser.map Sitemap (Url.Parser.s "sitemap")
         ]
 
 
@@ -103,9 +106,9 @@ routeToPath route =
             "notFound"
 
 
-locationToRoute : Navigation.Location -> Route
+locationToRoute : Url.Url -> Route
 locationToRoute location =
-    case UrlParser.parsePath matchers location of
+    case Url.Parser.parse matchers location of
         Just route ->
             route
 
@@ -121,23 +124,32 @@ updateTitleAndMetaDescription model =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        ChangeLocation pathWithSlash ->
-            ( model, Navigation.newUrl pathWithSlash )
+        LinkClicked urlRequest ->
+            case urlRequest of
+                Browser.Internal url ->
+                    ( model
+                    , Browser.Navigation.pushUrl model.key (Url.toString url)
+                    )
 
-        UrlChange location ->
+                Browser.External href ->
+                    ( model
+                    , Browser.Navigation.load href
+                    )
+
+        UrlChanged location ->
             let
                 newRoute =
                     locationToRoute location
 
                 newHistory =
-                    location.pathname :: model.history
+                    location.path :: model.history
 
                 newModel =
                     { model | route = newRoute, history = newHistory, location = location }
             in
-                ( newModel
-                , updateTitleAndMetaDescription newModel
-                )
+            ( newModel
+            , updateTitleAndMetaDescription newModel
+            )
 
         NewApi1Data result ->
             case result of
@@ -146,15 +158,15 @@ update msg model =
                         newModel =
                             { model | api1Data = data.url }
                     in
-                        ( newModel
-                        , updateTitleAndMetaDescription newModel
-                        )
+                    ( newModel
+                    , updateTitleAndMetaDescription newModel
+                    )
 
                 Err data ->
                     ( model, Cmd.none )
 
         FetchApi1Data url ->
-            ( model, Http.send NewApi1Data (Http.get url api1Decoder) )
+            ( model, Http.get { url = url, expect = Http.expectJson NewApi1Data api1Decoder } )
 
         NewApi2Data result ->
             case result of
@@ -163,68 +175,73 @@ update msg model =
                         newModel =
                             { model | api2Data = data.url }
                     in
-                        ( newModel
-                        , updateTitleAndMetaDescription newModel
-                        )
+                    ( newModel
+                    , updateTitleAndMetaDescription newModel
+                    )
 
                 Err data ->
                     ( model, Cmd.none )
 
         FetchApi2Data url ->
-            ( model, Http.send NewApi2Data (Http.get url api2Decoder) )
+            ( model, Http.get { url = url, expect = Http.expectJson NewApi2Data api2Decoder } )
 
         AddTimeToModel time ->
             let
                 newModel =
                     { model | initialTime = time }
             in
-                ( newModel, updateTitleAndMetaDescription newModel )
+            ( newModel, updateTitleAndMetaDescription newModel )
 
         OnTitleChanged title ->
             let
                 newTitleHistory =
                     title :: model.titleHistory
             in
-                ( { model | titleHistory = newTitleHistory }, Cmd.none )
+            ( { model | titleHistory = newTitleHistory }, Cmd.none )
 
         Tick newTime ->
             let
                 newModel =
                     { model | presentTime = newTime }
             in
-                ( newModel, updateTitleAndMetaDescription newModel )
+            ( newModel, updateTitleAndMetaDescription newModel )
 
 
-onLinkClick : String -> Attribute Msg
-onLinkClick path =
-    onWithOptions "click"
-        { stopPropagation = False
-        , preventDefault = True
-        }
-        (Decode.succeed (ChangeLocation path))
+
+-- onLinkClick : String -> Attribute Msg
+-- onLinkClick path =
+--     onWithOptions "click"
+--         { stopPropagation = False
+--         , preventDefault = True
+--         }
+--         (Decode.succeed (ChangeLocation path))
 
 
-view : Model -> Html Msg
+view : Model -> Browser.Document Msg
 view model =
-    div [ id "app" ]
-        [ node "style" [] [ text css ]
-        , h1 [] [ text model.title ]
-        , viewNavigation model
-        , viewMetadata model
-        , viewPage model
+    { title = model.title
+    , body =
+        [ div [ id "app" ]
+            [ node "style" [] [ text css ]
+            , h1 [] [ text model.title ]
+            , viewNavigation model
+            , viewMetadata model
+            , viewPage model
+            ]
         ]
+    }
 
 
 viewMetadata : Model -> Html msg
 viewMetadata model =
     div [ id "metadata" ]
-        [ p [ class "highlight" ] [ text ("Title: " ++ (titleForJs model)) ]
+        [ p [ class "highlight" ] [ text ("Title: " ++ titleForJs model) ]
         , p [] [ text "V = Version, H = History length, A = Type A Ajax, B = Type B Ajax" ]
         , p []
             [ text "History: "
             , span []
                 (List.map (\item -> span [ class "history" ] [ text item ])
-                    (List.reverse (model.history))
+                    (List.reverse model.history)
                 )
             ]
         ]
@@ -234,6 +251,7 @@ pathToName : String -> String
 pathToName path =
     if path == "" then
         "Home"
+
     else
         capitalize path
 
@@ -244,13 +262,14 @@ viewLink model path route =
         url =
             "/" ++ path
     in
-        li
-            []
-            [ if model.route == route then
-                div [ class "selected" ] [ text (pathToName path) ]
-              else
-                a [ href url, onLinkClick url ] [ text (pathToName path) ]
-            ]
+    li
+        []
+        [ if model.route == route then
+            div [ class "selected" ] [ text (pathToName path) ]
+
+          else
+            a [ href url ] [ text (pathToName path) ]
+        ]
 
 
 viewNavigation : Model -> Html Msg
@@ -290,15 +309,15 @@ viewPage model =
                 Sitemap ->
                     textarea []
                         [ text
-                            ((routeToSurgeUrl Top)
+                            (routeToSurgeUrl Top
                                 ++ "\n"
-                                ++ (routeToSurgeUrl Section1)
+                                ++ routeToSurgeUrl Section1
                                 ++ "\n"
-                                ++ (routeToSurgeUrl Section2)
+                                ++ routeToSurgeUrl Section2
                                 ++ "\n"
-                                ++ (routeToSurgeUrl Section3)
+                                ++ routeToSurgeUrl Section3
                                 ++ "\n"
-                                ++ (routeToSurgeUrl Sitemap)
+                                ++ routeToSurgeUrl Sitemap
                             )
                         ]
 
@@ -310,31 +329,32 @@ viewPage model =
 
 routeToSurgeUrl : Route -> String
 routeToSurgeUrl route =
-    "https://elm-spa-seo-testing.guupa.com/" ++ (routeToPath route)
+    "https://elm-spa-seo-testing.guupa.com/" ++ routeToPath route
 
 
-init : Navigation.Location -> ( Model, Cmd Msg )
-init location =
+init : () -> Url.Url -> Browser.Navigation.Key -> ( Model, Cmd Msg )
+init _ location key =
     let
         model =
-            initModel location
+            initModel location key
     in
-        ( model
-        , initCmd model location
-        )
+    ( model
+    , initCmd model location
+    )
 
 
-initModel : Navigation.Location -> Model
-initModel location =
+initModel : Url.Url -> Browser.Navigation.Key -> Model
+initModel location key =
     { route = locationToRoute location
-    , history = [ location.pathname ]
+    , key = key
+    , history = [ location.path ]
     , titleHistory = []
     , api1Data = ""
     , api2Data = ""
     , location = location
     , version = "9"
-    , initialTime = 0
-    , presentTime = 0
+    , initialTime = Time.millisToPosix 0
+    , presentTime = Time.millisToPosix 0
     , title = "SPA and SEO Testing"
     }
 
@@ -349,46 +369,47 @@ titleForJs model =
             extractNumber model.api2Data
 
         historyLength =
-            toString (List.length model.history)
+            String.fromInt (List.length model.history)
 
         time =
-            if model.presentTime > 0 then
-                toString (round ((model.presentTime - model.initialTime) / 1000))
+            if Time.posixToMillis model.presentTime > 0 then
+                String.fromInt ((Time.posixToMillis model.presentTime - Time.posixToMillis model.initialTime) // 1000)
+
             else
                 "0"
     in
-        model.title
-            ++ " - "
-            ++ "V"
-            ++ model.version
-            ++ ",T"
-            ++ time
-            ++ ",H"
-            ++ historyLength
-            ++ ",A"
-            ++ num1
-            ++ ",B"
-            ++ num2
-            ++ ","
-            ++ Time.DateTime.toISO8601 (Time.DateTime.fromTimestamp model.initialTime)
-            ++ ","
-            ++ model.location.pathname
+    model.title
+        ++ " - "
+        ++ "V"
+        ++ model.version
+        ++ ",T"
+        ++ time
+        ++ ",H"
+        ++ historyLength
+        ++ ",A"
+        ++ num1
+        ++ ",B"
+        ++ num2
+        ++ ","
+        ++ Iso8601.fromTime model.initialTime
+        ++ ","
+        ++ model.location.path
 
 
-initCmd : Model -> Navigation.Location -> Cmd Msg
+initCmd : Model -> Url.Url -> Cmd Msg
 initCmd model location =
     Cmd.batch
         [ Task.perform AddTimeToModel Time.now
-        , Task.perform (\_ -> FetchApi1Data "10.json") (Process.sleep (10.0 * Time.second))
-        , Task.perform (\_ -> FetchApi1Data "6.json") (Process.sleep (6.0 * Time.second))
-        , Task.perform (\_ -> FetchApi1Data "3.json") (Process.sleep (3.0 * Time.second))
-        , Task.perform (\_ -> FetchApi1Data "1.json") (Process.sleep (1.0 * Time.second))
-        , Task.perform (\_ -> FetchApi1Data "0.json") (Process.sleep (0.0 * Time.second))
-        , Task.perform (\_ -> FetchApi2Data "https://httpbin.org/delay/10") (Process.sleep (0.0 * Time.second))
-        , Task.perform (\_ -> FetchApi2Data "https://httpbin.org/delay/6") (Process.sleep (0.0 * Time.second))
-        , Task.perform (\_ -> FetchApi2Data "https://httpbin.org/delay/3") (Process.sleep (0.0 * Time.second))
-        , Task.perform (\_ -> FetchApi2Data "https://httpbin.org/delay/1") (Process.sleep (0.0 * Time.second))
-        , Task.perform (\_ -> FetchApi2Data "https://httpbin.org/delay/0") (Process.sleep (0.0 * Time.second))
+        , Task.perform (\_ -> FetchApi1Data "10.json") (Process.sleep (10.0 * 1000))
+        , Task.perform (\_ -> FetchApi1Data "6.json") (Process.sleep (6.0 * 1000))
+        , Task.perform (\_ -> FetchApi1Data "3.json") (Process.sleep (3.0 * 1000))
+        , Task.perform (\_ -> FetchApi1Data "1.json") (Process.sleep (1.0 * 1000))
+        , Task.perform (\_ -> FetchApi1Data "0.json") (Process.sleep (0.0 * 1000))
+        , Task.perform (\_ -> FetchApi2Data "https://httpbin.org/delay/10") (Process.sleep (0.0 * 1000))
+        , Task.perform (\_ -> FetchApi2Data "https://httpbin.org/delay/6") (Process.sleep (0.0 * 1000))
+        , Task.perform (\_ -> FetchApi2Data "https://httpbin.org/delay/3") (Process.sleep (0.0 * 1000))
+        , Task.perform (\_ -> FetchApi2Data "https://httpbin.org/delay/1") (Process.sleep (0.0 * 1000))
+        , Task.perform (\_ -> FetchApi2Data "https://httpbin.org/delay/0") (Process.sleep (0.0 * 1000))
         ]
 
 
@@ -396,14 +417,14 @@ extractNumber : String -> String
 extractNumber text =
     let
         number =
-            Regex.find Regex.All (Regex.regex "\\d{1,2}") text
+            Regex.find (Maybe.withDefault Regex.never (Regex.fromString "\\d{1,2}")) text
     in
-        case List.head number of
-            Nothing ->
-                "[NaN]"
+    case List.head number of
+        Nothing ->
+            "[NaN]"
 
-            Just data ->
-                data.match
+        Just data ->
+            data.match
 
 
 type alias Api1Data =
@@ -428,7 +449,7 @@ subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
         [ titleChanged OnTitleChanged
-        , Time.every Time.second Tick
+        , Time.every 1000 Tick
         ]
 
 
@@ -588,11 +609,13 @@ Turn itself back to re-behold the pass
 Which never yet a living person left."""
 
 
-main : Program Never Model Msg
+main : Program () Model Msg
 main =
-    Navigation.program UrlChange
+    Browser.application
         { init = init
         , view = view
         , update = update
         , subscriptions = subscriptions
+        , onUrlRequest = LinkClicked
+        , onUrlChange = UrlChanged
         }

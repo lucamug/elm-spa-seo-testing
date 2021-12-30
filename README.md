@@ -10,16 +10,16 @@ Check out [the full writeup](https://medium.com/@l.mugnaini/spa-and-seo-is-googl
 
 ## Getting started
 
-If you don't already have `elm` and `elm-live`:
+If you don't already have `elm` and `elm-go`:
 
 ```
-$ npm install -g elm elm-live
+$ npm install -g elm elm-go
 ```
 
 Then, to build everything:
 
 ```
-$ elm-live --dir=docs --output=docs/main.js src/main.elm --pushstate --open --debug
+$ elm-go src/main.elm --dir=docs --pushstate --open -- --output=docs/main.js --debug
 ```
 Then open http://localhost:8000/200.html (the app run on 200.html, this is a Surge requirement for SPA)
 
@@ -27,12 +27,9 @@ Then open http://localhost:8000/200.html (the app run on 200.html, this is a Sur
 
 ## To deploy
 
-```
-$ cd docs
-$ surge
-```
+The website is automatically deployed at https://elm-spa-seo-testing.guupa.com/ using Netlify so just merging into master will do it.
 
 ## Links
 
-* [Search Result](https://www.google.com/search?q=site:elm-spa-seo-testing.surge.sh)
+* [Search Result](https://www.google.com/search?q=site:elm-spa-seo-testing.guupa.com)
 * [Code](https://github.com/lucamug/elm-spa-seo-testing)
