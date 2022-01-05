@@ -1,4 +1,4 @@
-port module Main exposing (..)
+port module Main exposing (main)
 
 import Browser
 import Browser.Navigation
@@ -47,6 +47,8 @@ type alias Model =
     , initialTime : Time.Posix
     , presentTime : Time.Posix
     , title : String
+    , flags : Flags
+    , origin : String
     }
 
 
@@ -156,7 +158,9 @@ update msg model =
                 Ok data ->
                     let
                         newModel =
-                            { model | api1Data = data.url }
+                            { model
+                                | api1Data = data.url
+                            }
                     in
                     ( newModel
                     , updateTitleAndMetaDescription newModel
@@ -173,7 +177,10 @@ update msg model =
                 Ok data ->
                     let
                         newModel =
-                            { model | api2Data = data.url }
+                            { model
+                                | api2Data = data.url
+                                , origin = data.origin
+                            }
                     in
                     ( newModel
                     , updateTitleAndMetaDescription newModel
@@ -226,6 +233,9 @@ view model =
             , h1 [] [ text model.title ]
             , viewNavigation model
             , viewMetadata model
+            , p [] [ text model.flags.ua ]
+            , p [] [ text model.flags.commit ]
+            , p [] [ text model.origin ]
             , viewPage model
             ]
         ]
@@ -332,19 +342,19 @@ routeToSurgeUrl route =
     "https://elm-spa-seo-testing.guupa.com/" ++ routeToPath route
 
 
-init : () -> Url.Url -> Browser.Navigation.Key -> ( Model, Cmd Msg )
-init _ location key =
+init : Flags -> Url.Url -> Browser.Navigation.Key -> ( Model, Cmd Msg )
+init flags location key =
     let
         model =
-            initModel location key
+            initModel flags location key
     in
     ( model
     , initCmd model location
     )
 
 
-initModel : Url.Url -> Browser.Navigation.Key -> Model
-initModel location key =
+initModel : Flags -> Url.Url -> Browser.Navigation.Key -> Model
+initModel flags location key =
     { route = locationToRoute location
     , key = key
     , history = [ location.path ]
@@ -355,7 +365,9 @@ initModel location key =
     , version = "9"
     , initialTime = Time.millisToPosix 0
     , presentTime = Time.millisToPosix 0
-    , title = "SPA and SEO Testing"
+    , title = "[" ++ flags.commit ++ "] "
+    , flags = flags
+    , origin = "N/A"
     }
 
 
@@ -428,21 +440,27 @@ extractNumber text =
 
 
 type alias Api1Data =
-    { url : String }
+    { url : String
+    }
 
 
 type alias Api2Data =
-    { url : String }
+    { url : String
+    , origin : String
+    }
 
 
 api1Decoder : Decode.Decoder Api1Data
 api1Decoder =
-    Decode.map Api1Data (Decode.at [ "url" ] Decode.string)
+    Decode.map Api1Data
+        (Decode.at [ "url" ] Decode.string)
 
 
 api2Decoder : Decode.Decoder Api2Data
 api2Decoder =
-    Decode.map Api2Data (Decode.at [ "url" ] Decode.string)
+    Decode.map2 Api2Data
+        (Decode.at [ "url" ] Decode.string)
+        (Decode.at [ "origin" ] Decode.string)
 
 
 subscriptions : Model -> Sub Msg
@@ -607,7 +625,13 @@ Turn itself back to re-behold the pass
 Which never yet a living person left."""
 
 
-main : Program () Model Msg
+type alias Flags =
+    { commit : String
+    , ua : String
+    }
+
+
+main : Program Flags Model Msg
 main =
     Browser.application
         { init = init

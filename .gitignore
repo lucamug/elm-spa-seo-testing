@@ -1,4 +1,6 @@
 .editorconfig
 node_modules
 elm-stuff
-# main.js
+elm.js
+build/
+

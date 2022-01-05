@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>No JS, No Ajax. V.2</title>
+    <title>[_COMMIT_] No JS, No Ajax</title>
     <meta name="description" content="No JS, No Ajax. V.2">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
@@ -17,10 +17,15 @@
     <noscript>
         For full functionality of this site it is necessary to enable JavaScript.
     </noscript>
-    <script src="main.js"></script>
+    <script src="elm.js"></script>
     <script type="text/javascript">
         (function(_window, _document) {
-            var app = Elm.Main.init();
+            var app = Elm.Main.init({
+                flags: {
+                    commit: "_COMMIT_",
+                    ua: navigator.userAgent
+                }
+            });
             var _body = _document.body;
             var onUrlChange = function(page) {
                 _window.requestAnimationFrame(function() {

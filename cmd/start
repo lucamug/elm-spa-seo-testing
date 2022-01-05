@@ -1,0 +1,4 @@
+#!/bin/bash
+set -eu
+
+node_modules/.bin/elm-go src/main.elm --dir=docs --pushstate --open -- --output=docs/elm.js --debug

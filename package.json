@@ -1,0 +1,28 @@
+{
+  "name": "elm-spa-seo-testing",
+  "version": "1.0.0",
+  "description": "SPA and SEO: Is Googlebot able to render a Single Page Application with Ajax calls?",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucamug/elm-spa-seo-testing.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lucamug/elm-spa-seo-testing/issues"
+  },
+  "homepage": "https://github.com/lucamug/elm-spa-seo-testing#readme",
+  "devDependencies": {
+    "elm": "^0.19.1-5",
+    "elm-go": "^5.0.13",
+    "replace": "^1.2.1",
+    "terser": "^5.10.0"
+  }
+}
